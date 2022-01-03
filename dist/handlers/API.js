@@ -49,9 +49,9 @@ class ApiHandler {
             return response;
         }
         catch (error) {
-            if (typeof error === "string")
-                throw new Error(error);
-            throw new Error(error.response.data);
+            if (error.response?.data)
+                throw new Error(error.response.data);
+            throw error;
         }
     }
     handleRateLimit(ratelimitHeaders) {

@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import Client from '../../index';
 import FormData, { Stream } from 'form-data';
 declare type Theme = 'primary' | 'warning' | 'danger' | 'info' | 'none';

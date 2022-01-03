@@ -75,7 +75,7 @@ class ApiHandler {
 
             return response
         } catch (error: any) {
-            if (error.response.data) throw new Error(error.response.data)
+            if (error.response?.data) throw new Error(error.response.data)
             throw error
         }
     }

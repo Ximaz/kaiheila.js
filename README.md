@@ -26,7 +26,6 @@
         <li>&#9745;&nbsp;packetCompression</li>
     </ul>
     <li>&#9745;&nbsp;Upgrade to new Kaiheila API</li>
-    <li>&#9744;&nbsp;Access method from objects</li>
     <li>&#9744;&nbsp;Voice channels</li>
 </ul>
 <br>

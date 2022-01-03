@@ -396,7 +396,7 @@ class GuildBlacklistManager {
         return await this.#API.execute(this.#routes.blacklistCreate, {
             data: {
                 guild_id: guildId,
-                user_id: userId,
+                target_id: userId,
                 remark,
                 del_msg_days:
                     delMsgDays === 'SEVEN_DAYS'

@@ -1,6 +1,6 @@
 {
     "name": "kaiheilajs",
-    "version": "4.1.16",
+    "version": "4.1.17",
     "description": "A powerful JavaScript typedful library to create Kaiheila bots easiser.",
     "main": "dist/index",
     "typings": "dist/index",

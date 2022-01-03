@@ -211,7 +211,8 @@ export default class Card {
         }
     ) {
         this.addTextAndPicture(text, picture)
-        this.modules = [this.modules[this.modules.length], ...this.modules]
+        if (this.modules.length > 1)
+            this.modules = [this.modules[this.modules.length], ...this.modules]
         return this
     }
 

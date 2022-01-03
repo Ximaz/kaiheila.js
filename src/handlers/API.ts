@@ -66,6 +66,11 @@ class ApiHandler {
                 clearInterval(timeout)
                 return await this.#handler.request(config)
             }
+
+            if (response.data.code !== 0) {
+                throw new Error(`${response.data.message} (Error code : ${response.data.code})`)
+            }
+
             return response
         } catch (error: any) {
             throw new Error(error.response.data)

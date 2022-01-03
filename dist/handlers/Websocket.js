@@ -9,6 +9,12 @@ const zlib_1 = require("zlib");
 const Websocket_1 = require("../typings/handlers/Websocket");
 const WebSocketOptions = { maxRetry: 2, retry: true };
 class ClientWebSocket {
+    #attempts;
+    socket;
+    sn;
+    interval;
+    sessionId;
+    reopenSession;
     constructor(socketURL) {
         this.socket = new ws_1.default(socketURL);
         this.sn = 0;
@@ -17,7 +23,6 @@ class ClientWebSocket {
         this.sessionId = '';
         this.reopenSession = true;
     }
-    #attempts;
     send(body) {
         try {
             this.socket.send(JSON.stringify(body));
@@ -50,12 +55,12 @@ class ClientWebSocket {
         this.interval = setTimeout(this.sendHeartBeat, time);
     }
     parseResponse(event) {
-        if (types_1.isArrayBuffer(event)) {
+        if ((0, types_1.isArrayBuffer)(event)) {
             event = new TextDecoder('utf-8').decode(event);
         }
         if (Buffer.isBuffer(event)) {
             try {
-                event = zlib_1.inflateSync(event).toString('utf-8');
+                event = (0, zlib_1.inflateSync)(event).toString('utf-8');
             }
             catch (e) {
                 throw new Error(`WebSocket Event decompression error : ${e}`);

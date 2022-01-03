@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const API_1 = __importDefault(require("../API"));
 const form_data_1 = __importDefault(require("form-data"));
 class GuildEmojiManager {
+    #API;
+    #routes;
     constructor(client) {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    #API;
-    #routes;
     async list(guildId, { page, pageSize }) {
         return (await this.#API.execute(this.#routes.guildEmojiList, {
             params: { guild_id: guildId, page, page_size: pageSize },
@@ -46,12 +46,12 @@ class GuildEmojiManager {
     }
 }
 class GuildInviteManager {
+    #API;
+    #routes;
     constructor(client) {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    #API;
-    #routes;
     async list(targetId, { targetType, page, pageSize, }) {
         return (await this.#API.execute(this.#routes.inviteList, {
             params: {
@@ -107,12 +107,12 @@ class GuildInviteManager {
     }
 }
 class GuildBlacklistManager {
+    #API;
+    #routes;
     constructor(client) {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    #API;
-    #routes;
     async list(guildId) {
         return (await this.#API.execute(this.#routes.blacklistList, {
             params: { guild_id: guildId },
@@ -142,6 +142,11 @@ class GuildBlacklistManager {
     }
 }
 class GuildManager {
+    #API;
+    #routes;
+    emoji;
+    invite;
+    blacklist;
     constructor(client) {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
@@ -149,8 +154,6 @@ class GuildManager {
         this.invite = new GuildInviteManager(client);
         this.blacklist = new GuildBlacklistManager(client);
     }
-    #API;
-    #routes;
     async list({ page, pageSize, sort, }) {
         return (await this.#API.execute(this.#routes.guildList, {
             params: { page, pageSize, sort },

@@ -5,12 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const API_1 = __importDefault(require("../API"));
 class ChannelManager {
+    #API;
+    #routes;
     constructor(client) {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    #API;
-    #routes;
     async list(guildId, { page, pageSize, type, }) {
         return (await this.#API.execute(this.#routes.channelList, {
             params: {

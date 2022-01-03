@@ -5,12 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const API_1 = __importDefault(require("../API"));
 class DirectMessage {
+    #API;
+    #routes;
     constructor(client) {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    #API;
-    #routes;
     async list({ chatCode, targetId, msgId, flag, page, pageSize, }) {
         return (await this.#API.execute(this.#routes.directMessageList, {
             params: {

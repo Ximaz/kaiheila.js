@@ -31,6 +31,11 @@ const Manager = __importStar(require("./handlers/managers/index"));
 const Card_1 = __importDefault(require("./handlers/managers/Card"));
 exports.Card = Card_1.default;
 class Client extends events_1.EventEmitter {
+    token;
+    options;
+    #socket;
+    #API;
+    managers;
     constructor(token, options = {
         packetCompression: true,
         tokenType: 'BOT',
@@ -55,8 +60,6 @@ class Client extends events_1.EventEmitter {
             message: new Manager.MessageManager(this),
         };
     }
-    #socket;
-    #API;
     async login() {
         if (this.#socket) {
             clearTimeout(this.#socket.interval);

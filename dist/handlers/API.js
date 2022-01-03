@@ -7,6 +7,8 @@ const axios_1 = __importDefault(require("axios"));
 const Router_1 = __importDefault(require("../typings/Router"));
 const API_VERSION = 3, BASE_URL = `https://www.kaiheila.cn/api/v${API_VERSION}`;
 class ApiHandler {
+    #handler;
+    routes;
     constructor(token, { tokenType = 'BOT', lang = 'en-US' }) {
         this.#handler = axios_1.default.create({
             headers: {
@@ -21,7 +23,6 @@ class ApiHandler {
         });
         this.routes = new Router_1.default();
     }
-    #handler;
     getRoute(route) {
         return { method: route.m, url: route.r };
     }
@@ -45,8 +46,7 @@ class ApiHandler {
             return response;
         }
         catch (error) {
-            console.log(error.data);
-            throw new Error(error.data);
+            throw new Error(error.response.data);
         }
     }
     handleRateLimit(ratelimitHeaders) {

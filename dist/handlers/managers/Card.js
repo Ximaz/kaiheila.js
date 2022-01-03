@@ -1,6 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Card {
+    type;
+    theme;
+    color;
+    size;
+    modules;
+    fields;
+    #client;
+    #attachments;
     constructor(client, fromJson) {
         this.type = 'card';
         this.theme = 'primary';
@@ -25,8 +33,6 @@ class Card {
         }
         return this;
     }
-    #client;
-    #attachments;
     render() {
         return JSON.stringify(this);
     }

@@ -6,14 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const API_1 = __importDefault(require("../API"));
 const Card_1 = __importDefault(require("./Card"));
 class MessageManager {
+    #API;
+    #routes;
+    #client;
     constructor(client) {
         this.#client = client;
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    #API;
-    #routes;
-    #client;
     async list(targetId, { msgId, pin, flag, pageSize, }) {
         return (await this.#API.execute(this.#routes.messageList, {
             params: {

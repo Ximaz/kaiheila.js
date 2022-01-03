@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const API_1 = __importDefault(require("../API"));
 const form_data_1 = __importDefault(require("form-data"));
 class AssetManager {
+    #API;
+    #routes;
     constructor(client) {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    #API;
-    #routes;
     async create(file, options) {
         const form = new form_data_1.default();
         form.append('file', file, options);

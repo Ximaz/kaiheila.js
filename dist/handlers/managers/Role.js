@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const API_1 = __importDefault(require("../API"));
 const index_1 = require("./index");
 class RoleManager {
+    #API;
+    #routes;
     constructor(client) {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    #API;
-    #routes;
     async list(guildId, { page, pageSize }) {
         return (await this.#API.execute(this.#routes.roleList, {
             params: {

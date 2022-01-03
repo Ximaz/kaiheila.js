@@ -73,7 +73,7 @@ class Card {
     setAuthor(text, picture) {
         this.addTextAndPicture(text, picture);
         if (this.modules.length > 1)
-            this.modules = [this.modules[this.modules.length], ...this.modules];
+            this.modules = [this.modules[this.modules.length - 1], ...this.modules];
         return this;
     }
     addTextAndPicture(text, picture) {

@@ -68,13 +68,15 @@ class ApiHandler {
             }
 
             if (response.data.code !== 0) {
-                throw new Error(`${response.data.message} (Error code : ${response.data.code})`)
+                throw new Error(
+                    `${response.data.message} (Error code : ${response.data.code})`
+                )
             }
 
             return response
         } catch (error: any) {
-            if (typeof error === "string") throw new Error(error)
-            throw new Error(error.response.data)
+            if (error.response.data) throw new Error(error.response.data)
+            throw error
         }
     }
 

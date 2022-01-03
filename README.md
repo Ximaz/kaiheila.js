@@ -6,6 +6,9 @@
 
 <br>
 
+# KaiheilaJS support server :
+Join the KaiheilaJS support by click [right there](https://kaihei.co/qq794e).
+
 # Roadmap
 <ul>
     <li>&#9745;&nbsp;IntelliSens</li>

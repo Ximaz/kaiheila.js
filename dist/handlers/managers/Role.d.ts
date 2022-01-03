@@ -33,7 +33,7 @@ export default class RoleManager {
         permissions?: BitFields[];
         name?: string;
     }): Promise<Role>;
-    delete(guildId: string, roleId: number): Promise<void>;
+    delete(guildId: string, roleId: number): Promise<import("axios").AxiosResponse<any>>;
     assign(guildId: string, roleId: string, userId: string): Promise<{
         user_id: string;
         guild_id: string;

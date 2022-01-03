@@ -34,6 +34,6 @@ export default class UserManager {
      * Set the bot offline.
      */
     async offline() {
-        await this.#API.execute(this.#routes.userOffline)
+        return await this.#API.execute(this.#routes.userOffline)
     }
 }

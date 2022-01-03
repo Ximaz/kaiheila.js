@@ -79,8 +79,8 @@ export default class ChannelManager {
         limitAmount?: number;
         voiceQuality?: 'LOW' | 'NORMAL' | 'HIGH';
     }): Promise<FullChannel>;
-    delete(targetId: string): Promise<void>;
-    move(voiceChannelId: string, userIds: string[]): Promise<void>;
+    delete(targetId: string): Promise<import("axios").AxiosResponse<any>>;
+    move(voiceChannelId: string, userIds: string[]): Promise<import("axios").AxiosResponse<any>>;
     permissions(targetId: string): Promise<ChannelPermissions>;
     permissionOverwrite(targetId: string, { type, value, }: {
         type: 'USER' | 'ROLE';
@@ -105,6 +105,6 @@ export default class ChannelManager {
     deletePermissionOverwrite(targetId: string, { type, value, }: {
         type: 'USER' | 'ROLE';
         value: string;
-    }): Promise<void>;
+    }): Promise<import("axios").AxiosResponse<any>>;
 }
 export {};

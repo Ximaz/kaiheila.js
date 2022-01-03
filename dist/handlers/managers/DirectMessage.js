@@ -40,7 +40,7 @@ class DirectMessage {
         })).data.data;
     }
     async update(content, { msgId, quote, }) {
-        await this.#API.execute(this.#routes.directMessageUpdate, {
+        return await this.#API.execute(this.#routes.directMessageUpdate, {
             data: {
                 content,
                 msg_id: msgId,
@@ -49,7 +49,7 @@ class DirectMessage {
         });
     }
     async delete(msgId) {
-        await this.#API.execute(this.#routes.directMessageDelete, {
+        return await this.#API.execute(this.#routes.directMessageDelete, {
             data: {
                 msg_id: msgId,
             },
@@ -61,12 +61,12 @@ class DirectMessage {
         })).data.data;
     }
     async addReaction(msgId, emoji) {
-        await this.#API.execute(this.#routes.directMessageAddReaction, {
+        return await this.#API.execute(this.#routes.directMessageAddReaction, {
             data: { msg_id: msgId, emoji },
         });
     }
     async deleteReaction(msgId, emoji, { userId }) {
-        await this.#API.execute(this.#routes.directMessageDeleteReaction, {
+        return await this.#API.execute(this.#routes.directMessageDeleteReaction, {
             data: { msg_id: msgId, emoji, user_id: userId },
         });
     }

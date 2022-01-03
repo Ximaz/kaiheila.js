@@ -61,7 +61,7 @@ class MessageManager {
         })).data.data;
     }
     async update(msgId, content, { quote, tempTargetId, }) {
-        await this.#API.execute(this.#routes.messageUpdate, {
+        return await this.#API.execute(this.#routes.messageUpdate, {
             data: {
                 msg_id: msgId,
                 content,
@@ -71,7 +71,7 @@ class MessageManager {
         });
     }
     async delete(msgId) {
-        await this.#API.execute(this.#routes.messageDelete, {
+        return await this.#API.execute(this.#routes.messageDelete, {
             data: {
                 msg_id: msgId,
             },
@@ -86,7 +86,7 @@ class MessageManager {
         })).data.data;
     }
     async addReaction(msgId, emoji) {
-        await this.#API.execute(this.#routes.messageAddReaction, {
+        return await this.#API.execute(this.#routes.messageAddReaction, {
             data: {
                 msg_id: msgId,
                 emoji,
@@ -94,7 +94,7 @@ class MessageManager {
         });
     }
     async deleteReaction(msgId, emoji, { userId }) {
-        await this.#API.execute(this.#routes.messageDeleteReaction, {
+        return await this.#API.execute(this.#routes.messageDeleteReaction, {
             data: {
                 msg_id: msgId,
                 emoji,

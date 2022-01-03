@@ -119,7 +119,7 @@ class GuildBlacklistManager {
         })).data.data;
     }
     async create(guildId, userId, { remark, delMsgDays, }) {
-        await this.#API.execute(this.#routes.blacklistCreate, {
+        return await this.#API.execute(this.#routes.blacklistCreate, {
             data: {
                 guild_id: guildId,
                 user_id: userId,
@@ -133,7 +133,7 @@ class GuildBlacklistManager {
         });
     }
     async delete(guildId, userId) {
-        await this.#API.execute(this.#routes.blacklistDelete, {
+        return await this.#API.execute(this.#routes.blacklistDelete, {
             data: {
                 guild_id: guildId,
                 user_id: userId,
@@ -183,7 +183,7 @@ class GuildManager {
     async setNickname(guildId, userId, nickname) {
         if (nickname.length < 2 || nickname.length > 64)
             throw new Error('The nickname must be from 2 to 64 characters long.');
-        await this.#API.execute(this.#routes.guildNickname, {
+        return await this.#API.execute(this.#routes.guildNickname, {
             data: {
                 guild_id: guildId,
                 user_id: userId,
@@ -192,12 +192,12 @@ class GuildManager {
         });
     }
     async leave(guildId) {
-        await this.#API.execute(this.#routes.guildLeave, {
+        return await this.#API.execute(this.#routes.guildLeave, {
             data: { guild_id: guildId },
         });
     }
     async kick(guildId, targetId) {
-        await this.#API.execute(this.#routes.guildKickout, {
+        return await this.#API.execute(this.#routes.guildKickout, {
             data: { guild_id: guildId, target_id: targetId },
         });
     }
@@ -207,12 +207,12 @@ class GuildManager {
         })).data.data;
     }
     async addMuteOrDeaf(guildId, userId, type) {
-        await this.#API.execute(this.#routes.guildMuteCreate, {
+        return await this.#API.execute(this.#routes.guildMuteCreate, {
             data: { guild_id: guildId, user_id: userId, type },
         });
     }
     async removeMuteOrDeaf(guildId, userId, type) {
-        await this.#API.execute(this.#routes.guildMuteDelete, {
+        return await this.#API.execute(this.#routes.guildMuteDelete, {
             data: { guild_id: guildId, user_id: userId, type },
         });
     }

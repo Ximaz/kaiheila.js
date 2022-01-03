@@ -39,7 +39,7 @@ export default class IntimacyManager {
             imgId,
         }: { score?: string; socialInfo?: string; imgId?: string }
     ) {
-        await this.#API.execute(this.#routes.intimacyUpdate, {
+        return await this.#API.execute(this.#routes.intimacyUpdate, {
             params: {
                 user_id: userId,
                 score,

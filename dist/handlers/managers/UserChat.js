@@ -34,7 +34,7 @@ class UserChatManager {
         })).data.data;
     }
     async delete(targetId) {
-        await this.#API.execute(this.#routes.userChatCreate, {
+        return await this.#API.execute(this.#routes.userChatCreate, {
             data: {
                 target_id: targetId,
             },

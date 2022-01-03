@@ -43,12 +43,12 @@ class ChannelManager {
         })).data.data;
     }
     async delete(targetId) {
-        await this.#API.execute(this.#routes.channelDelete, {
+        return await this.#API.execute(this.#routes.channelDelete, {
             data: { channel_id: targetId },
         });
     }
     async move(voiceChannelId, userIds) {
-        await this.#API.execute(this.#routes.channelDelete, {
+        return await this.#API.execute(this.#routes.channelDelete, {
             data: { target_id: voiceChannelId, user_ids: userIds },
         });
     }
@@ -78,7 +78,7 @@ class ChannelManager {
         })).data.data;
     }
     async deletePermissionOverwrite(targetId, { type, value, }) {
-        await this.#API.execute(this.#routes.channelRoleDelete, {
+        return await this.#API.execute(this.#routes.channelRoleDelete, {
             data: {
                 target_id: targetId,
                 type: type === 'ROLE' ? 'role_id' : 'user_id',

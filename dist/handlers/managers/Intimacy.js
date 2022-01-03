@@ -17,7 +17,7 @@ class IntimacyManager {
         })).data.data;
     }
     async update(userId, { score, socialInfo, imgId, }) {
-        await this.#API.execute(this.#routes.intimacyUpdate, {
+        return await this.#API.execute(this.#routes.intimacyUpdate, {
             params: {
                 user_id: userId,
                 score,

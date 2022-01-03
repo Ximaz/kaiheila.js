@@ -39,7 +39,7 @@ class Client extends events_1.EventEmitter {
     constructor(token, options = {
         packetCompression: true,
         tokenType: 'BOT',
-        lang: 'en-US',
+        lang: 'en-us',
     }) {
         super();
         if (!token)

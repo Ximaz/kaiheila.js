@@ -20,7 +20,7 @@ class UserManager {
         })).data.data;
     }
     async offline() {
-        await this.#API.execute(this.#routes.userOffline);
+        return await this.#API.execute(this.#routes.userOffline);
     }
 }
 exports.default = UserManager;

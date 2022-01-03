@@ -19,6 +19,6 @@ export default class IntimacyManager {
         score?: string;
         socialInfo?: string;
         imgId?: string;
-    }): Promise<void>;
+    }): Promise<import("axios").AxiosResponse<any>>;
 }
 export {};

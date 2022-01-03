@@ -35,6 +35,6 @@ export default class UserChatManager {
     }): Promise<UserChatList>;
     view(chatCode: string): Promise<UserChatListItem>;
     create(targetId: string): Promise<UserChatListItem>;
-    delete(targetId: string): Promise<void>;
+    delete(targetId: string): Promise<import("axios").AxiosResponse<any>>;
 }
 export {};

@@ -120,7 +120,7 @@ export default class RoleManager {
     }
 
     async delete(guildId: string, roleId: number) {
-        await this.#API.execute(this.#routes.roleDelete, {
+        return await this.#API.execute(this.#routes.roleDelete, {
             data: { guild_id: guildId, role_id: roleId },
         })
     }

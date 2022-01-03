@@ -219,8 +219,8 @@ declare class GuildBlacklistManager {
     create(guildId: string, userId: string, { remark, delMsgDays, }: {
         remark?: string;
         delMsgDays?: 'ONE_DAY' | 'SEVEN_DAYS' | 'DONT_DElETE';
-    }): Promise<void>;
-    delete(guildId: string, userId: string): Promise<void>;
+    }): Promise<import("axios").AxiosResponse<any>>;
+    delete(guildId: string, userId: string): Promise<import("axios").AxiosResponse<any>>;
 }
 export default class GuildManager {
     #private;
@@ -245,15 +245,15 @@ export default class GuildManager {
         pageSize?: number;
         filterUserId?: string;
     }): Promise<GuildUserList>;
-    setNickname(guildId: string, userId: string, nickname: string): Promise<void>;
-    leave(guildId: string): Promise<void>;
-    kick(guildId: string, targetId: string): Promise<void>;
+    setNickname(guildId: string, userId: string, nickname: string): Promise<import("axios").AxiosResponse<any>>;
+    leave(guildId: string): Promise<import("axios").AxiosResponse<any>>;
+    kick(guildId: string, targetId: string): Promise<import("axios").AxiosResponse<any>>;
     getMuteAndDeaf(guildId: string, returnType?: string): Promise<MuteAndDeaf>;
     private addMuteOrDeaf;
     private removeMuteOrDeaf;
-    mute(guildId: string, userId: string): Promise<void>;
-    deaf(guildId: string, userId: string): Promise<void>;
-    unmute(guildId: string, userId: string): Promise<void>;
-    undeaf(guildId: string, userId: string): Promise<void>;
+    mute(guildId: string, userId: string): Promise<import("axios").AxiosResponse<any>>;
+    deaf(guildId: string, userId: string): Promise<import("axios").AxiosResponse<any>>;
+    unmute(guildId: string, userId: string): Promise<import("axios").AxiosResponse<any>>;
+    undeaf(guildId: string, userId: string): Promise<import("axios").AxiosResponse<any>>;
 }
 export {};

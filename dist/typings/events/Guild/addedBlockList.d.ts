@@ -7,7 +7,7 @@ export interface Extra {
     type: string;
     body: Body;
 }
-export default interface AddedBlockList {
+export default interface AddedBlackList {
     channel_type: string;
     type: number;
     target_id: string;

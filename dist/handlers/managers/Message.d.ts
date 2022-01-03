@@ -134,12 +134,12 @@ export default class MessageManager {
     update(msgId: string, content: string, { quote, tempTargetId, }: {
         quote?: string;
         tempTargetId?: string;
-    }): Promise<void>;
-    delete(msgId: string): Promise<void>;
+    }): Promise<import("axios").AxiosResponse<any>>;
+    delete(msgId: string): Promise<import("axios").AxiosResponse<any>>;
     listReaction(msgId: string, emoji: string): Promise<MessageReactionUser[]>;
-    addReaction(msgId: string, emoji: string): Promise<void>;
+    addReaction(msgId: string, emoji: string): Promise<import("axios").AxiosResponse<any>>;
     deleteReaction(msgId: string, emoji: string, { userId }: {
         userId?: string;
-    }): Promise<void>;
+    }): Promise<import("axios").AxiosResponse<any>>;
 }
 export {};

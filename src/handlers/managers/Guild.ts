@@ -393,7 +393,7 @@ class GuildBlacklistManager {
             delMsgDays?: 'ONE_DAY' | 'SEVEN_DAYS' | 'DONT_DElETE'
         }
     ) {
-        await this.#API.execute(this.#routes.blacklistCreate, {
+        return await this.#API.execute(this.#routes.blacklistCreate, {
             data: {
                 guild_id: guildId,
                 user_id: userId,
@@ -409,7 +409,7 @@ class GuildBlacklistManager {
     }
 
     async delete(guildId: string, userId: string) {
-        await this.#API.execute(this.#routes.blacklistDelete, {
+        return await this.#API.execute(this.#routes.blacklistDelete, {
             data: {
                 guild_id: guildId,
                 user_id: userId,
@@ -519,7 +519,7 @@ export default class GuildManager {
             throw new Error(
                 'The nickname must be from 2 to 64 characters long.'
             )
-        await this.#API.execute(this.#routes.guildNickname, {
+        return await this.#API.execute(this.#routes.guildNickname, {
             data: {
                 guild_id: guildId,
                 user_id: userId,
@@ -533,7 +533,7 @@ export default class GuildManager {
      *
      */
     async leave(guildId: string) {
-        await this.#API.execute(this.#routes.guildLeave, {
+        return await this.#API.execute(this.#routes.guildLeave, {
             data: { guild_id: guildId },
         })
     }
@@ -543,7 +543,7 @@ export default class GuildManager {
      *
      */
     async kick(guildId: string, targetId: string) {
-        await this.#API.execute(this.#routes.guildKickout, {
+        return await this.#API.execute(this.#routes.guildKickout, {
             data: { guild_id: guildId, target_id: targetId },
         })
     }
@@ -560,7 +560,7 @@ export default class GuildManager {
     }
 
     private async addMuteOrDeaf(guildId: string, userId: string, type: 1 | 2) {
-        await this.#API.execute(this.#routes.guildMuteCreate, {
+        return await this.#API.execute(this.#routes.guildMuteCreate, {
             data: { guild_id: guildId, user_id: userId, type },
         })
     }
@@ -570,7 +570,7 @@ export default class GuildManager {
         userId: string,
         type: 1 | 2
     ) {
-        await this.#API.execute(this.#routes.guildMuteDelete, {
+        return await this.#API.execute(this.#routes.guildMuteDelete, {
             data: { guild_id: guildId, user_id: userId, type },
         })
     }

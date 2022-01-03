@@ -264,7 +264,7 @@ export default class MessageManager {
             tempTargetId?: string
         }
     ) {
-        await this.#API.execute(this.#routes.messageUpdate, {
+        return await this.#API.execute(this.#routes.messageUpdate, {
             data: {
                 msg_id: msgId,
                 content,
@@ -279,7 +279,7 @@ export default class MessageManager {
      *
      */
     async delete(msgId: string) {
-        await this.#API.execute(this.#routes.messageDelete, {
+        return await this.#API.execute(this.#routes.messageDelete, {
             data: {
                 msg_id: msgId,
             },
@@ -306,7 +306,7 @@ export default class MessageManager {
      *
      */
     async addReaction(msgId: string, emoji: string) {
-        await this.#API.execute(this.#routes.messageAddReaction, {
+        return await this.#API.execute(this.#routes.messageAddReaction, {
             data: {
                 msg_id: msgId,
                 emoji,
@@ -323,7 +323,7 @@ export default class MessageManager {
         emoji: string,
         { userId }: { userId?: string }
     ) {
-        await this.#API.execute(this.#routes.messageDeleteReaction, {
+        return await this.#API.execute(this.#routes.messageDeleteReaction, {
             data: {
                 msg_id: msgId,
                 emoji,

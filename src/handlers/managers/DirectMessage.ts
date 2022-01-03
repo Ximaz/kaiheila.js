@@ -141,7 +141,7 @@ export default class DirectMessage {
             quote?: string
         }
     ) {
-        await this.#API.execute(this.#routes.directMessageUpdate, {
+        return await this.#API.execute(this.#routes.directMessageUpdate, {
             data: {
                 content,
                 msg_id: msgId,
@@ -155,7 +155,7 @@ export default class DirectMessage {
      *
      */
     async delete(msgId: string) {
-        await this.#API.execute(this.#routes.directMessageDelete, {
+        return await this.#API.execute(this.#routes.directMessageDelete, {
             data: {
                 msg_id: msgId,
             },
@@ -179,7 +179,7 @@ export default class DirectMessage {
      *
      */
     async addReaction(msgId: string, emoji: string) {
-        await this.#API.execute(this.#routes.directMessageAddReaction, {
+        return await this.#API.execute(this.#routes.directMessageAddReaction, {
             data: { msg_id: msgId, emoji },
         })
     }
@@ -193,8 +193,11 @@ export default class DirectMessage {
         emoji: string,
         { userId }: { userId?: string }
     ) {
-        await this.#API.execute(this.#routes.directMessageDeleteReaction, {
-            data: { msg_id: msgId, emoji, user_id: userId },
-        })
+        return await this.#API.execute(
+            this.#routes.directMessageDeleteReaction,
+            {
+                data: { msg_id: msgId, emoji, user_id: userId },
+            }
+        )
     }
 }

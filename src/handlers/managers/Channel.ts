@@ -159,7 +159,7 @@ export default class ChannelManager {
      *
      */
     async delete(targetId: string) {
-        await this.#API.execute(this.#routes.channelDelete, {
+        return await this.#API.execute(this.#routes.channelDelete, {
             data: { channel_id: targetId },
         })
     }
@@ -169,7 +169,7 @@ export default class ChannelManager {
      *
      */
     async move(voiceChannelId: string, userIds: string[]) {
-        await this.#API.execute(this.#routes.channelDelete, {
+        return await this.#API.execute(this.#routes.channelDelete, {
             data: { target_id: voiceChannelId, user_ids: userIds },
         })
     }
@@ -266,7 +266,7 @@ export default class ChannelManager {
             value: string
         }
     ) {
-        await this.#API.execute(this.#routes.channelRoleDelete, {
+        return await this.#API.execute(this.#routes.channelRoleDelete, {
             data: {
                 target_id: targetId,
                 type: type === 'ROLE' ? 'role_id' : 'user_id',

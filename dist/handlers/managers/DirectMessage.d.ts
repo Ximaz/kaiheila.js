@@ -63,14 +63,14 @@ export default class DirectMessage {
     update(content: string, { msgId, quote, }: {
         msgId?: string;
         quote?: string;
-    }): Promise<void>;
-    delete(msgId: string): Promise<void>;
+    }): Promise<import("axios").AxiosResponse<any>>;
+    delete(msgId: string): Promise<import("axios").AxiosResponse<any>>;
     listReaction(msgId: string, { emoji }: {
         emoji?: string;
     }): Promise<ReactionUser[]>;
-    addReaction(msgId: string, emoji: string): Promise<void>;
+    addReaction(msgId: string, emoji: string): Promise<import("axios").AxiosResponse<any>>;
     deleteReaction(msgId: string, emoji: string, { userId }: {
         userId?: string;
-    }): Promise<void>;
+    }): Promise<import("axios").AxiosResponse<any>>;
 }
 export {};

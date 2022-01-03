@@ -42,8 +42,8 @@ type GlobalEvents = {
     deletedPrivateMessage: (e: DirectMessage.DeletedPrivateMessage) => void
 
     // Guild events :
-    addedBlaockList: (e: Guild.AddedBlockList) => void
-    deletedBlaockList: (e: Guild.DeletedBlockList) => void
+    addedBlaockList: (e: Guild.AddedBlackList) => void
+    deletedBlaockList: (e: Guild.DeletedBlackList) => void
     deletedGuild: (e: Guild.DeletedGuild) => void
     updatedGuild: (e: Guild.UpdatedGuild) => void
 
@@ -108,7 +108,7 @@ class Client extends EventEmitter {
         options: ClientOptions = {
             packetCompression: true,
             tokenType: 'BOT',
-            lang: 'en-US',
+            lang: 'en-us',
         }
     ) {
         super()

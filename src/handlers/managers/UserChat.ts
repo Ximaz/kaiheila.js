@@ -86,7 +86,7 @@ export default class UserChatManager {
      *
      */
     async delete(targetId: string) {
-        await this.#API.execute(this.#routes.userChatCreate, {
+        return await this.#API.execute(this.#routes.userChatCreate, {
             data: {
                 target_id: targetId,
             },

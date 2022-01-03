@@ -8,5 +8,5 @@ export default class UserManager {
     view(userId: string, { guildId }: {
         guildId?: string;
     }): Promise<User>;
-    offline(): Promise<void>;
+    offline(): Promise<import("axios").AxiosResponse<any>>;
 }

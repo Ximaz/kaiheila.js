@@ -59,7 +59,7 @@ class RoleManager {
         })).data.data;
     }
     async delete(guildId, roleId) {
-        await this.#API.execute(this.#routes.roleDelete, {
+        return await this.#API.execute(this.#routes.roleDelete, {
             data: { guild_id: guildId, role_id: roleId },
         });
     }

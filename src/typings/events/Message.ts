@@ -5,8 +5,10 @@ import VideoExtra from './Message/videoMessage'
 import KMarkdownExtra from './Message/kmarkdownMessage'
 import CardExtra from './Message/cardMessage'
 
+declare type ChannelType = 'GROUP' | 'PERSON'
+
 export declare interface Message {
-    channel_type: string
+    channel_type: ChannelType
     type: number
     target_id: string
     author_id: string
@@ -22,3 +24,4 @@ export declare interface Message {
         | KMarkdownExtra
         | CardExtra
 }
+

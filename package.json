@@ -1,9 +1,9 @@
 {
     "name": "kaiheilajs",
     "version": "4.0.2",
-    "description": "JavaScript x Typescript library to create a powerful Kaiheila bot.",
-    "main": "dist/src/index",
-    "typings": "dist/src/index",
+    "description": "A powerful JavaScript typedful library to create Kaiheila bots easiser.",
+    "main": "dist/index",
+    "typings": "dist/index",
     "scripts": {
         "start": "tsc",
         "build:doc": "typedoc --out docs src/index.ts"

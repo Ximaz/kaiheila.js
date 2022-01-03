@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import Client from '../../index';
 import FormData, { Stream } from 'form-data';
 declare type Theme = 'primary' | 'warning' | 'danger' | 'info' | 'none';
@@ -90,7 +89,7 @@ export default class Card {
     get attachments(): {
         attachmentName: string;
         upload: {
-            file: Buffer | Stream;
+            file: Stream | Buffer;
             options?: FormData.AppendOptions | undefined;
         };
     }[];
@@ -117,7 +116,7 @@ export default class Card {
     addPictureGridContainer(elements: PictureGroupModule['elements']): this;
     addPictureContainer(elements: ContainerModule['elements']): this;
     addInteraction(elements: InteractiveModule['elements']): this;
-    addNote(type: ContentModule['text']['type'], note: string): this;
+    addNote(type: 'plain-text' | 'kmarkdown', note: string): this;
     addNotePicture(src: string): this;
     addDivider(): this;
     addCountdownModule(startTime: CountdownModule['startTime'], endTime: CountdownModule['endTime'], mode: CountdownModule['mode']): this;

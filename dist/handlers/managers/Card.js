@@ -62,7 +62,7 @@ class Card {
         return this;
     }
     addParagraph(content) {
-        return this.addContentModule('paragraph', content);
+        return this.addContentModule('plain-text', content);
     }
     addPlainText(content) {
         return this.addContentModule('plain-text', content);

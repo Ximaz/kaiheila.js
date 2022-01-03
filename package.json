@@ -5,8 +5,7 @@
     "main": "dist/index",
     "typings": "dist/index",
     "scripts": {
-        "start": "tsc",
-        "build:doc": "typedoc --out docs src/index.ts"
+        "start": "tsc"
     },
     "keywords": [
         "kaiheila",

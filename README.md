@@ -32,7 +32,7 @@
 # Sample code :
 ```js
 const Kaiheila = require('kaiheilajs'),
-    { token, prefix } = require('./.config.json'),
+    { token, prefix } = require('./config.example.json'),
     client = new Kaiheila.Client(token, {
         lang: 'en-US',
         packetCompression: true,

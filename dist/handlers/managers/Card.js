@@ -34,6 +34,7 @@ class Card {
     }
     addModule(module) {
         this.modules.push(module);
+        return this;
     }
     addContentModule(type, content) {
         return this.addModule({
@@ -72,6 +73,7 @@ class Card {
     setAuthor(text, picture) {
         this.addTextAndPicture(text, picture);
         this.modules = [this.modules[this.modules.length], ...this.modules];
+        return this;
     }
     addTextAndPicture(text, picture) {
         return this.addModule({
@@ -86,8 +88,6 @@ class Card {
                 ...picture,
             },
         });
-    }
-    addSection(mode, accessory) {
     }
     addHeader(content) {
         return this.addModule({
@@ -111,6 +111,17 @@ class Card {
                 {
                     type,
                     content: note,
+                },
+            ],
+        });
+    }
+    addNotePicture(src) {
+        return this.addModule({
+            type: 'context',
+            elements: [
+                {
+                    type: 'image',
+                    src,
                 },
             ],
         });

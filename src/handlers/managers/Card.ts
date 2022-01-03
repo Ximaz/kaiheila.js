@@ -152,6 +152,7 @@ export default class Card {
 
     private addModule(module: Module) {
         this.modules.push(module)
+        return this
     }
 
     private addContentModule(
@@ -168,22 +169,22 @@ export default class Card {
         return this.#attachments
     }
 
-    setType(type: 'card' | 'category') {
+    setType(type: 'card' | 'category'): this {
         this.type = type
         return this
     }
 
-    setTheme(theme: Theme) {
+    setTheme(theme: Theme): this {
         this.theme = theme
         return this
     }
 
-    setColor(color: string) {
+    setColor(color: string): this {
         this.color = color
         return this
     }
 
-    setSize(size: Size) {
+    setSize(size: Size): this {
         this.size = size
         return this
     }
@@ -211,6 +212,7 @@ export default class Card {
     ) {
         this.addTextAndPicture(text, picture)
         this.modules = [this.modules[this.modules.length], ...this.modules]
+        return this
     }
 
     addTextAndPicture(
@@ -236,23 +238,25 @@ export default class Card {
         })
     }
 
+    /**
     addSection(
         mode: ContentModule['mode'],
         accessory: ContentModule['accessory']
     ) {
-        // this.addModule({ type: 'section', mode, accessory })
+        this.addModule({ type: 'section', mode, accessory })
     }
 
-    // addAttachment(
-    //     attachmentName: string,
-    //     file: Buffer | Stream,
-    //     options?: FormData.AppendOptions
-    // ) {
-    //     this.#attachments.push({
-    //         attachmentName,
-    //         upload: { file, options },
-    //     })
-    // }
+    addAttachment(
+        attachmentName: string,
+        file: Buffer | Stream,
+        options?: FormData.AppendOptions
+    ) {
+        this.#attachments.push({
+            attachmentName,
+            upload: { file, options },
+        })
+    }
+    */
 
     addHeader(content: string) {
         return this.addModule({

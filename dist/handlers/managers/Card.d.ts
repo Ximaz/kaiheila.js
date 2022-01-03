@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import Client from '../../index';
 import FormData, { Stream } from 'form-data';
 declare type Theme = 'primary' | 'warning' | 'danger' | 'info' | 'none';
@@ -85,11 +84,12 @@ export default class Card {
     modules: Module[];
     fields: [NoteModule | KMarkdownElement][];
     constructor(client?: Client, fromJson?: object | Card);
-    render(): string;
+    private addModule;
+    private addContentModule;
     get attachments(): {
         attachmentName: string;
         upload: {
-            file: Buffer | Stream;
+            file: Stream | Buffer;
             options?: FormData.AppendOptions | undefined;
         };
     }[];
@@ -97,32 +97,33 @@ export default class Card {
     setTheme(theme: Theme): this;
     setColor(color: string): this;
     setSize(size: Size): this;
-    addModule(module: Module): this;
-    addContentModule(module: ContentModule): this;
+    addParagraph(content: string): void;
+    addPlainText(content: string): void;
+    addKMarkdown(content: string): void;
     setAuthor(text: string, picture?: {
         src: PictureElement['src'];
         size: PictureElement['size'];
         circle: PictureElement['circle'];
         side: 'left' | 'right';
-    }): this;
+    }): void;
     addTextAndPicture(text: string, picture?: {
         src: PictureElement['src'];
         size: PictureElement['size'];
         circle: PictureElement['circle'];
         side: 'left' | 'right';
-    }): this;
+    }): void;
     addSection(mode: ContentModule['mode'], accessory: ContentModule['accessory']): void;
-    addHeader(content: string): this;
-    addPictureGridContainer(elements: PictureGroupModule['elements']): this;
-    addPictureContainer(elements: ContainerModule['elements']): this;
-    addInteraction(elements: InteractiveModule['elements']): this;
-    addNote(elements: NoteModule['elements']): this;
-    addDivider(): this;
-    addCountdownModule(startTime: CountdownModule['startTime'], endTime: CountdownModule['endTime'], mode: CountdownModule['mode']): this;
-    addInviteModule(code: InviteModule['code']): this;
+    addHeader(content: string): void;
+    addPictureGridContainer(elements: PictureGroupModule['elements']): void;
+    addPictureContainer(elements: ContainerModule['elements']): void;
+    addInteraction(elements: InteractiveModule['elements']): void;
+    addNote(type: ContentModule['text']['type'], note: string): void;
+    addDivider(): void;
+    addCountdownModule(startTime: CountdownModule['startTime'], endTime: CountdownModule['endTime'], mode: CountdownModule['mode']): void;
+    addInviteModule(code: InviteModule['code']): void;
     addRowFields(fields: Array<{
         name: string;
         value: string;
-    }>, inline?: boolean): this;
+    }>, inline?: boolean): void;
 }
 export {};

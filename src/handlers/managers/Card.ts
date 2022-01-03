@@ -130,7 +130,7 @@ export default class Card {
         this.type = 'card'
         this.theme = 'primary'
         this.color = ''
-        this.size = 'sm'
+        this.size = 'lg'
         this.modules = []
         this.fields = []
         this.#attachments = []
@@ -148,11 +148,20 @@ export default class Card {
         } else {
             Object.assign(this, fromJson)
         }
-        return this
     }
 
-    render() {
-        return JSON.stringify(this)
+    private addModule(module: Module) {
+        this.modules.push(module)
+    }
+
+    private addContentModule(
+        type: ContentModule['text']['type'],
+        content: string
+    ) {
+        return this.addModule({
+            type: 'section',
+            text: { type, content },
+        } as ContentModule)
     }
 
     get attachments() {
@@ -179,14 +188,16 @@ export default class Card {
         return this
     }
 
-    addModule(module: Module) {
-        this.modules.push(module)
-        return this
+    addParagraph(content: string) {
+        return this.addContentModule('paragraph', content)
     }
 
-    addContentModule(module: ContentModule) {
-        this.addModule(module)
-        return this
+    addPlainText(content: string) {
+        return this.addContentModule('plain-text', content)
+    }
+
+    addKMarkdown(content: string) {
+        return this.addContentModule('kmarkdown', content)
     }
 
     setAuthor(
@@ -198,20 +209,8 @@ export default class Card {
             side: 'left' | 'right'
         }
     ) {
-        const module = {
-            type: 'section',
-            text: {
-                type: 'plain-text',
-                content: text,
-            },
-            mode: picture?.side || 'left',
-            accessory: {
-                type: 'image',
-                ...picture,
-            } as PictureElement,
-        }
-        this.modules = [module as ContentModule, ...this.modules]
-        return this
+        this.addTextAndPicture(text, picture)
+        this.modules = [this.modules[this.modules.length], ...this.modules]
     }
 
     addTextAndPicture(
@@ -223,7 +222,7 @@ export default class Card {
             side: 'left' | 'right'
         }
     ) {
-        this.addModule({
+        return this.addModule({
             type: 'section',
             text: {
                 type: 'plain-text',
@@ -235,7 +234,6 @@ export default class Card {
                 ...picture,
             } as PictureElement,
         })
-        return this
     }
 
     addSection(
@@ -257,36 +255,50 @@ export default class Card {
     // }
 
     addHeader(content: string) {
-        this.addModule({
+        return this.addModule({
             type: 'header',
             text: { type: 'plain-text', content },
         })
-        return this
     }
 
     addPictureGridContainer(elements: PictureGroupModule['elements']) {
-        this.addModule({ type: 'image-group', elements })
-        return this
+        return this.addModule({ type: 'image-group', elements })
     }
 
     addPictureContainer(elements: ContainerModule['elements']) {
-        this.addModule({ type: 'container', elements })
-        return this
+        return this.addModule({ type: 'container', elements })
     }
 
     addInteraction(elements: InteractiveModule['elements']) {
-        this.addModule({ type: 'action-group', elements })
-        return this
+        return this.addModule({ type: 'action-group', elements })
     }
 
-    addNote(elements: NoteModule['elements']) {
-        this.addModule({ type: 'context', elements })
-        return this
+    addNote(type: ContentModule['text']['type'], note: string) {
+        return this.addModule({
+            type: 'context',
+            elements: [
+                {
+                    type,
+                    content: note,
+                },
+            ],
+        } as unknown as NoteModule)
+    }
+
+    addNotePicture(src: string) {
+        return this.addModule({
+            type: 'context',
+            elements: [
+                {
+                    type: 'image',
+                    src,
+                },
+            ],
+        } as unknown as NoteModule)
     }
 
     addDivider() {
-        this.addModule({ type: 'divider' })
-        return this
+        return this.addModule({ type: 'divider' })
     }
 
     addCountdownModule(
@@ -294,13 +306,11 @@ export default class Card {
         endTime: CountdownModule['endTime'],
         mode: CountdownModule['mode']
     ) {
-        this.addModule({ type: 'countdown', startTime, endTime, mode })
-        return this
+        return this.addModule({ type: 'countdown', startTime, endTime, mode })
     }
 
     addInviteModule(code: InviteModule['code']) {
-        this.addModule({ type: 'invite', code })
-        return this
+        return this.addModule({ type: 'invite', code })
     }
 
     addRowFields(
@@ -312,14 +322,14 @@ export default class Card {
             fields = fields.slice(3)
         }
         const o = {
-            type: 'section',
-            text: {
-                type: 'paragraph',
-                cols: 1,
-                fields: Array<{ type: string; content: string }>(),
+                type: 'section',
+                text: {
+                    type: 'paragraph',
+                    cols: 1,
+                    fields: Array<{ type: string; content: string }>(),
+                },
             },
-        }
-        const f = []
+            f = []
         if (!inline) {
             for (const field of Object.values(fields)) {
                 f.push({
@@ -344,7 +354,6 @@ export default class Card {
             o.text.cols = fields.length
         }
         o.text.fields = f
-        this.addModule(o as unknown as AreaTextStructure)
-        return this
+        return this.addModule(o as unknown as AreaTextStructure)
     }
 }

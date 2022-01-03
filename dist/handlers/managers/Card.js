@@ -13,7 +13,7 @@ class Card {
         this.type = 'card';
         this.theme = 'primary';
         this.color = '';
-        this.size = 'sm';
+        this.size = 'lg';
         this.modules = [];
         this.fields = [];
         this.#attachments = [];
@@ -31,10 +31,15 @@ class Card {
         else {
             Object.assign(this, fromJson);
         }
-        return this;
     }
-    render() {
-        return JSON.stringify(this);
+    addModule(module) {
+        this.modules.push(module);
+    }
+    addContentModule(type, content) {
+        return this.addModule({
+            type: 'section',
+            text: { type, content },
+        });
     }
     get attachments() {
         return this.#attachments;
@@ -55,32 +60,21 @@ class Card {
         this.size = size;
         return this;
     }
-    addModule(module) {
-        this.modules.push(module);
-        return this;
+    addParagraph(content) {
+        return this.addContentModule('paragraph', content);
     }
-    addContentModule(module) {
-        this.addModule(module);
-        return this;
+    addPlainText(content) {
+        return this.addContentModule('plain-text', content);
+    }
+    addKMarkdown(content) {
+        return this.addContentModule('kmarkdown', content);
     }
     setAuthor(text, picture) {
-        const module = {
-            type: 'section',
-            text: {
-                type: 'plain-text',
-                content: text,
-            },
-            mode: picture?.side || 'left',
-            accessory: {
-                type: 'image',
-                ...picture,
-            },
-        };
-        this.modules = [module, ...this.modules];
-        return this;
+        this.addTextAndPicture(text, picture);
+        this.modules = [this.modules[this.modules.length], ...this.modules];
     }
     addTextAndPicture(text, picture) {
-        this.addModule({
+        return this.addModule({
             type: 'section',
             text: {
                 type: 'plain-text',
@@ -92,44 +86,43 @@ class Card {
                 ...picture,
             },
         });
-        return this;
     }
     addSection(mode, accessory) {
     }
     addHeader(content) {
-        this.addModule({
+        return this.addModule({
             type: 'header',
             text: { type: 'plain-text', content },
         });
-        return this;
     }
     addPictureGridContainer(elements) {
-        this.addModule({ type: 'image-group', elements });
-        return this;
+        return this.addModule({ type: 'image-group', elements });
     }
     addPictureContainer(elements) {
-        this.addModule({ type: 'container', elements });
-        return this;
+        return this.addModule({ type: 'container', elements });
     }
     addInteraction(elements) {
-        this.addModule({ type: 'action-group', elements });
-        return this;
+        return this.addModule({ type: 'action-group', elements });
     }
-    addNote(elements) {
-        this.addModule({ type: 'context', elements });
-        return this;
+    addNote(type, note) {
+        return this.addModule({
+            type: 'context',
+            elements: [
+                {
+                    type,
+                    content: note,
+                },
+            ],
+        });
     }
     addDivider() {
-        this.addModule({ type: 'divider' });
-        return this;
+        return this.addModule({ type: 'divider' });
     }
     addCountdownModule(startTime, endTime, mode) {
-        this.addModule({ type: 'countdown', startTime, endTime, mode });
-        return this;
+        return this.addModule({ type: 'countdown', startTime, endTime, mode });
     }
     addInviteModule(code) {
-        this.addModule({ type: 'invite', code });
-        return this;
+        return this.addModule({ type: 'invite', code });
     }
     addRowFields(fields, inline) {
         while (fields.length > 3) {
@@ -143,8 +136,7 @@ class Card {
                 cols: 1,
                 fields: Array(),
             },
-        };
-        const f = [];
+        }, f = [];
         if (!inline) {
             for (const field of Object.values(fields)) {
                 f.push({
@@ -170,8 +162,7 @@ class Card {
             o.text.cols = fields.length;
         }
         o.text.fields = f;
-        this.addModule(o);
-        return this;
+        return this.addModule(o);
     }
 }
 exports.default = Card;

@@ -150,7 +150,7 @@ export default class Card {
         }
     }
 
-    private addModule(module: Module) {
+    private addModule(module: Module): this {
         this.modules.push(module)
         return this
     }
@@ -158,7 +158,7 @@ export default class Card {
     private addContentModule(
         type: ContentModule['text']['type'],
         content: string
-    ) {
+    ): this {
         return this.addModule({
             type: 'section',
             text: { type, content },
@@ -189,15 +189,15 @@ export default class Card {
         return this
     }
 
-    addParagraph(content: string) {
+    addParagraph(content: string): this {
         return this.addContentModule('paragraph', content)
     }
 
-    addPlainText(content: string) {
+    addPlainText(content: string): this {
         return this.addContentModule('plain-text', content)
     }
 
-    addKMarkdown(content: string) {
+    addKMarkdown(content: string): this {
         return this.addContentModule('kmarkdown', content)
     }
 
@@ -209,7 +209,7 @@ export default class Card {
             circle: PictureElement['circle']
             side: 'left' | 'right'
         }
-    ) {
+    ): this {
         this.addTextAndPicture(text, picture)
         this.modules = [this.modules[this.modules.length], ...this.modules]
         return this
@@ -223,7 +223,7 @@ export default class Card {
             circle: PictureElement['circle']
             side: 'left' | 'right'
         }
-    ) {
+    ): this {
         return this.addModule({
             type: 'section',
             text: {
@@ -242,7 +242,7 @@ export default class Card {
     addSection(
         mode: ContentModule['mode'],
         accessory: ContentModule['accessory']
-    ) {
+    ): this {
         this.addModule({ type: 'section', mode, accessory })
     }
 
@@ -250,7 +250,7 @@ export default class Card {
         attachmentName: string,
         file: Buffer | Stream,
         options?: FormData.AppendOptions
-    ) {
+    ): this {
         this.#attachments.push({
             attachmentName,
             upload: { file, options },
@@ -258,26 +258,26 @@ export default class Card {
     }
     */
 
-    addHeader(content: string) {
+    addHeader(content: string): this {
         return this.addModule({
             type: 'header',
             text: { type: 'plain-text', content },
         })
     }
 
-    addPictureGridContainer(elements: PictureGroupModule['elements']) {
+    addPictureGridContainer(elements: PictureGroupModule['elements']): this {
         return this.addModule({ type: 'image-group', elements })
     }
 
-    addPictureContainer(elements: ContainerModule['elements']) {
+    addPictureContainer(elements: ContainerModule['elements']): this {
         return this.addModule({ type: 'container', elements })
     }
 
-    addInteraction(elements: InteractiveModule['elements']) {
+    addInteraction(elements: InteractiveModule['elements']): this {
         return this.addModule({ type: 'action-group', elements })
     }
 
-    addNote(type: ContentModule['text']['type'], note: string) {
+    addNote(type: ContentModule['text']['type'], note: string): this {
         return this.addModule({
             type: 'context',
             elements: [
@@ -289,7 +289,7 @@ export default class Card {
         } as unknown as NoteModule)
     }
 
-    addNotePicture(src: string) {
+    addNotePicture(src: string): this {
         return this.addModule({
             type: 'context',
             elements: [
@@ -301,7 +301,7 @@ export default class Card {
         } as unknown as NoteModule)
     }
 
-    addDivider() {
+    addDivider(): this {
         return this.addModule({ type: 'divider' })
     }
 
@@ -309,18 +309,18 @@ export default class Card {
         startTime: CountdownModule['startTime'],
         endTime: CountdownModule['endTime'],
         mode: CountdownModule['mode']
-    ) {
+    ): this {
         return this.addModule({ type: 'countdown', startTime, endTime, mode })
     }
 
-    addInviteModule(code: InviteModule['code']) {
+    addInviteModule(code: InviteModule['code']): this {
         return this.addModule({ type: 'invite', code })
     }
 
     addRowFields(
         fields: Array<{ name: string; value: string }>,
         inline?: boolean
-    ) {
+    ): this {
         while (fields.length > 3) {
             this.addRowFields(fields.slice(0, 3), inline)
             fields = fields.slice(3)
@@ -334,7 +334,7 @@ export default class Card {
                 },
             },
             f = []
-        if (!inline) {
+        if (!inline){
             for (const field of Object.values(fields)) {
                 f.push({
                     type: 'kmarkdown',

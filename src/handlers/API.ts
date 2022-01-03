@@ -73,6 +73,7 @@ class ApiHandler {
 
             return response
         } catch (error: any) {
+            if (typeof error === "string") throw new Error(error)
             throw new Error(error.response.data)
         }
     }

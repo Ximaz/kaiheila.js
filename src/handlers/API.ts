@@ -68,8 +68,7 @@ class ApiHandler {
             }
             return response
         } catch (error: any) {
-            console.log(error.data)
-            throw new Error(error.data)
+            throw new Error(error.response.data)
         }
     }
 

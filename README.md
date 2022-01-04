@@ -37,7 +37,7 @@ Join the KaiheilaJS support by click [right there](https://kaihei.co/qq794e).
 const Kaiheila = require('kaiheilajs'),
     { token, prefix } = require('./config.example.json'),
     client = new Kaiheila.Client(token, {
-        lang: 'en-US',
+        lang: 'en-us',
         packetCompression: true,
         tokenType: 'BOT',
     })

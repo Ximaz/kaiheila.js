@@ -2,13 +2,14 @@ import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios'
 import { ClientTokenType } from '../typings/Client'
 import Routes, { Route } from '../typings/Router'
 
-const API_VERSION = 3,
-    BASE_URL = `https://www.kaiheila.cn/api/v${API_VERSION}`
+const BASE_URL = `https://www.kaiheila.cn/api`
 
 export declare interface ApiHandlerOptions {
     tokenType: ClientTokenType
     lang: string
 }
+
+let cookie = ''
 
 class ApiHandler {
     #handler
@@ -34,7 +35,7 @@ class ApiHandler {
     }
 
     private getRoute(route: Route) {
-        return { method: route.m as Method, url: route.r }
+        return { method: route.m as Method, url: `/v${route.v || 3}${route.r}` }
     }
 
     async execute(
@@ -47,15 +48,19 @@ class ApiHandler {
     ): Promise<AxiosResponse> {
         try {
             const { method, url } = this.getRoute(route),
-                config: AxiosRequestConfig = {
+                headers = {
+                    ...this.#handler.defaults.headers,
+                    ...options?.headers,
+                }
+
+            if (cookie !== '') headers['Cookie'] = cookie
+
+            const config: AxiosRequestConfig = {
                     method,
                     url,
                     data: options?.data,
                     params: options?.params,
-                    headers: {
-                        ...this.#handler.defaults.headers,
-                        ...options?.headers,
-                    },
+                    headers,
                 },
                 response = await this.#handler.request(config),
                 { isRatelimitReached, delay } = this.handleRateLimit(
@@ -73,9 +78,13 @@ class ApiHandler {
                 )
             }
 
+            cookie += `${cookie.length > 0 ? ';' : ''}${
+                response.headers['set-cookie']
+            }`
             return response
         } catch (error: any) {
-            if (error.response?.data) throw new Error(error.response.data)
+            if (error.response?.data)
+                throw new Error(JSON.stringify(error.response.data))
             throw error
         }
     }

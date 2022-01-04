@@ -1,6 +1,7 @@
 export declare interface Route {
     m: string;
     r: string;
+    v?: number;
 }
 export default class Routes {
     'me': Route;

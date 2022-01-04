@@ -33,6 +33,7 @@ exports.Card = Card_1.default;
 class Client extends events_1.EventEmitter {
     token;
     options;
+    sessionId;
     #socket;
     #API;
     managers;
@@ -58,7 +59,9 @@ class Client extends events_1.EventEmitter {
             channel: new Manager.ChannelManager(this),
             intimacy: new Manager.IntimacyManager(this),
             message: new Manager.MessageManager(this),
+            voice: new Manager.VoiceManager(this),
         };
+        this.sessionId = '';
     }
     async login() {
         if (this.#socket) {
@@ -99,6 +102,7 @@ class Client extends events_1.EventEmitter {
                     const { sessionId, session_id } = response.d, trustedSessionId = sessionId || session_id;
                     if (!this.#socket.sessionId)
                         this.#socket.sessionId = trustedSessionId;
+                    this.sessionId = trustedSessionId;
                     this.emit('ready', trustedSessionId);
                     break;
                 case Websocket_2.EventType.PING:

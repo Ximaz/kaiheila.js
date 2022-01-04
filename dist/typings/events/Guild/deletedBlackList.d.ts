@@ -1,13 +1,12 @@
 export interface Body {
-    channel_id: string;
     operator_id: string;
-    msg_id: string;
+    user_id: string[];
 }
 export interface Extra {
     type: string;
     body: Body;
 }
-export default interface PinnedMessage {
+export default interface DeletedBlackList {
     channel_type: string;
     type: number;
     target_id: string;

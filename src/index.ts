@@ -90,12 +90,14 @@ declare interface Managers {
     channel: Manager.ChannelManager
     intimacy: Manager.IntimacyManager
     message: Manager.MessageManager
+    voice: Manager.VoiceManager
 }
 
 class Client extends EventEmitter {
     // Client
     token
     options
+    sessionId: string
     #socket: ClientWebSocket | undefined
 
     // API Handlings
@@ -130,7 +132,9 @@ class Client extends EventEmitter {
             channel: new Manager.ChannelManager(this),
             intimacy: new Manager.IntimacyManager(this),
             message: new Manager.MessageManager(this),
+            voice: new Manager.VoiceManager(this),
         }
+        this.sessionId = ''
     }
 
     async login() {
@@ -190,6 +194,7 @@ class Client extends EventEmitter {
                             trustedSessionId = sessionId || session_id
                         if (!this.#socket.sessionId)
                             this.#socket.sessionId = trustedSessionId
+                        this.sessionId = trustedSessionId
                         this.emit('ready', trustedSessionId)
                         break
 

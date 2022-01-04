@@ -5,7 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const Router_1 = __importDefault(require("../typings/Router"));
-const API_VERSION = 3, BASE_URL = `https://www.kaiheila.cn/api/v${API_VERSION}`;
+const BASE_URL = `https://www.kaiheila.cn/api`;
+let cookie = '';
 class ApiHandler {
     #handler;
     routes;
@@ -24,19 +25,22 @@ class ApiHandler {
         this.routes = new Router_1.default();
     }
     getRoute(route) {
-        return { method: route.m, url: route.r };
+        return { method: route.m, url: `/v${route.v || 3}${route.r}` };
     }
     async execute(route, options) {
         try {
-            const { method, url } = this.getRoute(route), config = {
+            const { method, url } = this.getRoute(route), headers = {
+                ...this.#handler.defaults.headers,
+                ...options?.headers,
+            };
+            if (cookie !== '')
+                headers['Cookie'] = cookie;
+            const config = {
                 method,
                 url,
                 data: options?.data,
                 params: options?.params,
-                headers: {
-                    ...this.#handler.defaults.headers,
-                    ...options?.headers,
-                },
+                headers,
             }, response = await this.#handler.request(config), { isRatelimitReached, delay } = this.handleRateLimit(response.headers);
             if (isRatelimitReached) {
                 const timeout = setTimeout(() => 0, (delay + 1) * 1000);
@@ -46,11 +50,12 @@ class ApiHandler {
             if (response.data.code !== 0) {
                 throw new Error(`${response.data.message} (Error code : ${response.data.code})`);
             }
+            cookie += `${cookie.length > 0 ? ';' : ''}${response.headers['set-cookie']}`;
             return response;
         }
         catch (error) {
             if (error.response?.data)
-                throw new Error(error.response.data);
+                throw new Error(JSON.stringify(error.response.data));
             throw error;
         }
     }

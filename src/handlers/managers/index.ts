@@ -8,6 +8,7 @@ import ChannelManager from './Channel'
 import MessageManager from './Message'
 import IntimacyManager from './Intimacy'
 import CardManager from './Card'
+import VoiceManager from './Voice'
 
 export {
     UserManager,
@@ -19,7 +20,8 @@ export {
     ChannelManager,
     MessageManager,
     IntimacyManager,
-    CardManager
+    CardManager,
+    VoiceManager
 }
 
 export type BitFields =

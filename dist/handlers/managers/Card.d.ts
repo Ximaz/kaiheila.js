@@ -90,7 +90,7 @@ export default class Card {
     get attachments(): {
         attachmentName: string;
         upload: {
-            file: Buffer | Stream;
+            file: Stream | Buffer;
             options?: FormData.AppendOptions | undefined;
         };
     }[];

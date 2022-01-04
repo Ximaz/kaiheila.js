@@ -8,7 +8,8 @@ import ChannelManager from './Channel';
 import MessageManager from './Message';
 import IntimacyManager from './Intimacy';
 import CardManager from './Card';
-export { UserManager, UserChatManager, DirectMessageManager, AssetManager, RoleManager, GuildManager, ChannelManager, MessageManager, IntimacyManager, CardManager };
+import VoiceManager from './Voice';
+export { UserManager, UserChatManager, DirectMessageManager, AssetManager, RoleManager, GuildManager, ChannelManager, MessageManager, IntimacyManager, CardManager, VoiceManager };
 export declare type BitFields = 'ADMINISTRATOR' | 'MANAGE_SERVER' | 'VIEW_MANAGEMENT_LOG' | 'CREATE_SERVER_INVITATION' | 'MANAGE_INVITATION' | 'MANAGE_CHANNEL' | 'KICKOUT_USERS' | 'BAN_USERS' | 'MANAGE_CUSTOM_EMOTICONS' | 'MODIFY_SERVER_NAME' | 'MANAGE_ROLE_PERMISSIONS' | 'VIEW_TEXT_AND_VOICE_CHANNELS' | 'RELEASE_THE_NEWS' | 'MANAGE_MESSAGE' | 'UPLOAD_FILES' | 'VOICE_LINK' | 'MANAGE_VOICE' | 'MENTION_EVERYONE' | 'ADD_REACTION' | 'FOLLOW_ADDED_REACTION' | 'JOIN_VOICE_AS_MUTED' | 'USE_PUSH_TO_TALK' | 'USE_BUTTON_TO_TALK' | 'SPEAK' | 'MUTE_SERVER' | 'CLOSE_SERVER_MICROPHONE' | 'MANAGE_NICKNAMES' | 'PLAY_ACCOMPANIMENT';
 export declare const Bits: {
     ADMINISTRATOR: number;

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Bits = exports.CardManager = exports.IntimacyManager = exports.MessageManager = exports.ChannelManager = exports.GuildManager = exports.RoleManager = exports.AssetManager = exports.DirectMessageManager = exports.UserChatManager = exports.UserManager = void 0;
+exports.Bits = exports.VoiceManager = exports.CardManager = exports.IntimacyManager = exports.MessageManager = exports.ChannelManager = exports.GuildManager = exports.RoleManager = exports.AssetManager = exports.DirectMessageManager = exports.UserChatManager = exports.UserManager = void 0;
 const User_1 = __importDefault(require("./User"));
 exports.UserManager = User_1.default;
 const UserChat_1 = __importDefault(require("./UserChat"));
@@ -24,6 +24,8 @@ const Intimacy_1 = __importDefault(require("./Intimacy"));
 exports.IntimacyManager = Intimacy_1.default;
 const Card_1 = __importDefault(require("./Card"));
 exports.CardManager = Card_1.default;
+const Voice_1 = __importDefault(require("./Voice"));
+exports.VoiceManager = Voice_1.default;
 exports.Bits = {
     ADMINISTRATOR: 1 << 0,
     MANAGE_SERVER: 1 << 1,

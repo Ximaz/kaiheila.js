@@ -24,8 +24,8 @@ const Intimacy_1 = __importDefault(require("./Intimacy"));
 exports.IntimacyManager = Intimacy_1.default;
 const Card_1 = __importDefault(require("./Card"));
 exports.CardManager = Card_1.default;
-const Voice_1 = __importDefault(require("./Voice"));
-exports.VoiceManager = Voice_1.default;
+// const Voice_1 = __importDefault(require("./Voice"));
+// exports.VoiceManager = Voice_1.default;
 exports.Bits = {
     ADMINISTRATOR: 1 << 0,
     MANAGE_SERVER: 1 << 1,

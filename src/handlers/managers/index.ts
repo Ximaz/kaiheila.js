@@ -21,7 +21,7 @@ export {
     MessageManager,
     IntimacyManager,
     CardManager,
-    VoiceManager
+    // VoiceManager
 }
 
 export type BitFields =

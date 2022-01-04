@@ -58,8 +58,7 @@ class Client extends events_1.EventEmitter {
             guild: new Manager.GuildManager(this),
             channel: new Manager.ChannelManager(this),
             intimacy: new Manager.IntimacyManager(this),
-            message: new Manager.MessageManager(this),
-            voice: new Manager.VoiceManager(this),
+            message: new Manager.MessageManager(this)
         };
         this.sessionId = '';
     }

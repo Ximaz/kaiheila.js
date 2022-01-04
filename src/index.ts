@@ -90,7 +90,6 @@ declare interface Managers {
     channel: Manager.ChannelManager
     intimacy: Manager.IntimacyManager
     message: Manager.MessageManager
-    voice: Manager.VoiceManager
 }
 
 class Client extends EventEmitter {
@@ -131,8 +130,7 @@ class Client extends EventEmitter {
             guild: new Manager.GuildManager(this),
             channel: new Manager.ChannelManager(this),
             intimacy: new Manager.IntimacyManager(this),
-            message: new Manager.MessageManager(this),
-            voice: new Manager.VoiceManager(this),
+            message: new Manager.MessageManager(this)
         }
         this.sessionId = ''
     }

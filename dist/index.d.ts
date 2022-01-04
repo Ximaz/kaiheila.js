@@ -56,7 +56,6 @@ declare interface Managers {
     channel: Manager.ChannelManager;
     intimacy: Manager.IntimacyManager;
     message: Manager.MessageManager;
-    voice: Manager.VoiceManager;
 }
 declare class Client extends EventEmitter {
     #private;

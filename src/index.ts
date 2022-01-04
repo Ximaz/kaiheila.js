@@ -42,8 +42,8 @@ type GlobalEvents = {
     deletedPrivateMessage: (e: DirectMessage.DeletedPrivateMessage) => void
 
     // Guild events :
-    addedBlaockList: (e: Guild.AddedBlackList) => void
-    deletedBlaockList: (e: Guild.DeletedBlackList) => void
+    addedBlockList: (e: Guild.AddedBlackList) => void
+    deletedBlockList: (e: Guild.DeletedBlackList) => void
     deletedGuild: (e: Guild.DeletedGuild) => void
     updatedGuild: (e: Guild.UpdatedGuild) => void
 

@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import Client from '../../index';
 import FormData, { Stream } from 'form-data';
 declare type Theme = 'primary' | 'warning' | 'danger' | 'info' | 'none';
@@ -90,7 +89,7 @@ export default class Card {
     get attachments(): {
         attachmentName: string;
         upload: {
-            file: Stream | Buffer;
+            file: Buffer | Stream;
             options?: FormData.AppendOptions | undefined;
         };
     }[];

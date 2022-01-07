@@ -2,7 +2,7 @@
 ### A powerful JavaScript typedful library to create Kaiheila bots easiser.
 <img src="assets/logo.png" width="50px" height="50px">
 <br>
-<small>(Made with ❤️ by Name#0001 on Kaiheila)</small>
+<small>(Made with ❤️ by Yummy#0001 on Kaiheila)</small>
 
 <br>
 

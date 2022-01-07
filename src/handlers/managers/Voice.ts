@@ -58,33 +58,33 @@
 // }
 
 import Client from '../../index'
-import ffmpegPath from 'ffmpeg-static'
+// import ffmpegPath from 'ffmpeg-static'
 import childProcess from 'child_process'
-import os from 'os'
-import path from 'path'
+// import os from 'os'
+// import path from 'path'
 import ApiHandler from '../API'
 import ws from 'ws'
 
-const ffmpeg = ffmpegPath.replace(/(.+)(?:\/.+$)/, '$1'),
-    platform = process.env.npm_config_platform || os.platform(),
-    arch = process.env.npm_config_arch || os.arch(),
-    voicePath = path.join(
-        __dirname,
-        `../../../bin/voice_${platform}_${arch}${
-            platform === 'win32' ? '.exe' : ''
-        }`
-    )
+// const ffmpeg = ffmpegPath.replace(/(.+)(?:\/.+$)/, '$1'),
+//     platform = process.env.npm_config_platform || os.platform(),
+//     arch = process.env.npm_config_arch || os.arch(),
+//     voicePath = path.join(
+//         __dirname,
+//         `../../../bin/voice_${platform}_${arch}${
+//             platform === 'win32' ? '.exe' : ''
+//         }`
+//     )
 
 export default class VoiceManager {
-    // #client: Client
-    // #API: ApiHandler
-    // #socket: ws | undefined
-    // dispatcher?: childProcess.ChildProcess
+    #client: Client
+    #API: ApiHandler
+    #socket: ws | undefined
+    dispatcher?: childProcess.ChildProcess
     constructor(client: Client) {
-        throw new Error('Voice functions have not been implemented yet.')
-        // this.#client = client
-        // this.#API = new ApiHandler(client.token, client.options)
-        // this.#socket = undefined
+        this.#client = client
+        this.#API = new ApiHandler(client.token, client.options)
+        this.#socket = undefined
+        // throw new Error('Voice functions have not been implemented yet.')
     }
 
     // private __play(
@@ -125,25 +125,26 @@ export default class VoiceManager {
     //     return this.dispatcher
     // }
 
-    // async join(channelId: string) {
-    //     const { gateway_url } = (
-    //         await this.#API.execute(
-    //             {
-    //                 m: 'post',
-    //                 r: '/channels/token/' + channelId,
-    //                 v: 2,
-    //             },
-    //             {
-    //                 data: { ip_discovery: ['37.166.242.217'] },
-    //                 headers: {
-    //                     'x-client-sessionid': this.#client.sessionId
-    //                 },
-    //             }
-    //         )
-    //     ).data
-    //     this.#socket = new ws(gateway_url)
-    //     return this.#socket
-    // }
+    async join(channelId: string) {
+        const { gateway_url } = (
+            await this.#API.execute(
+                {
+                    m: 'post',
+                    r: '/channels/token/' + channelId,
+                    v: 2,
+                },
+                {
+                    data: { ip_discovery: [] },
+                    headers: {
+                        'x-client-sessionid': this.#client.sessionId,
+                    },
+                }
+            )
+        ).data
+
+        this.#socket = new ws(gateway_url)
+        return this.#socket
+    }
 
     // disconnect() {
     //     this.dispatcher?.disconnect()

@@ -47,7 +47,7 @@ class ApiHandler {
                 clearInterval(timeout);
                 return await this.#handler.request(config);
             }
-            if (response.data.code !== 0) {
+            if (response.data.code && response.data.code !== 0) {
                 throw new Error(`${response.data.message} (Error code : ${response.data.code})`);
             }
             cookie += `${cookie.length > 0 ? ';' : ''}${response.headers['set-cookie']}`;

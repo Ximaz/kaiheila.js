@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios'
 import { ClientTokenType } from '../typings/Client'
 import Routes, { Route } from '../typings/Router'
 
-const BASE_URL = `https://www.kaiheila.cn/api`
+const BASE_URL = `https://www.kaiheila.cn/api/v3`
 
 export declare interface ApiHandlerOptions {
     tokenType: ClientTokenType
@@ -35,7 +35,7 @@ class ApiHandler {
     }
 
     private getRoute(route: Route) {
-        return { method: route.m as Method, url: `/v${route.v || 3}${route.r}` }
+        return { method: route.m as Method, url: route.r }
     }
 
     async execute(

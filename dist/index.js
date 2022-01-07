@@ -59,7 +59,6 @@ class Client extends events_1.EventEmitter {
             channel: new Manager.ChannelManager(this),
             intimacy: new Manager.IntimacyManager(this),
             message: new Manager.MessageManager(this),
-            voice: new Manager.VoiceManager(this)
         };
         this.sessionId = '';
     }

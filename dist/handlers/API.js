@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const Router_1 = __importDefault(require("../typings/Router"));
-const BASE_URL = `https://www.kaiheila.cn/api`;
+const BASE_URL = `https://www.kaiheila.cn/api/v3`;
 let cookie = '';
 class ApiHandler {
     #handler;
@@ -25,7 +25,7 @@ class ApiHandler {
         this.routes = new Router_1.default();
     }
     getRoute(route) {
-        return { method: route.m, url: `/v${route.v || 3}${route.r}` };
+        return { method: route.m, url: route.r };
     }
     async execute(route, options) {
         try {

@@ -12,33 +12,30 @@ class RoleManager {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    async list(guildId, { page, pageSize }) {
+    async list(guildId, options) {
         return (await this.#API.execute(this.#routes.roleList, {
             params: {
                 guild_id: guildId,
-                page,
-                page_size: pageSize,
+                page: options?.page,
+                page_size: options?.pageSize,
             },
         })).data.data;
     }
-    async create(guildId, name, { hoist, mentionnable, color, permissions, }) {
+    async create(guildId, name, options) {
         const response = (await this.#API.execute(this.#routes.roleCreate, {
             data: { guild_id: guildId, name },
         })).data.data;
-        if (!hoist && !mentionnable && !color && !permissions)
+        if (!options?.hoist &&
+            !options?.mentionnable &&
+            !options?.color &&
+            !options?.permissions)
             return response;
-        return this.update(guildId, response.role_id, {
-            hoist,
-            mentionnable,
-            color,
-            permissions,
-            name,
-        });
+        return this.update(guildId, response.role_id, options);
     }
-    async update(guildId, roleId, { hoist, mentionnable, color, permissions, name, }) {
+    async update(guildId, roleId, options) {
         let pFlags = 0;
-        if (permissions) {
-            for (const p of permissions) {
+        if (options?.permissions) {
+            for (const p of options?.permissions) {
                 pFlags += index_1.Bits[p];
             }
         }
@@ -46,12 +43,12 @@ class RoleManager {
             data: {
                 guild_id: guildId,
                 role_id: roleId,
-                permissions: permissions ? pFlags : undefined,
-                color,
-                name,
-                hoist: hoist !== undefined ? (hoist ? 1 : 0) : undefined,
-                mentionnable: mentionnable !== undefined
-                    ? mentionnable
+                permissions: options?.permissions ? pFlags : undefined,
+                color: options?.color,
+                name: options?.name,
+                hoist: options?.hoist !== undefined ? (options?.hoist ? 1 : 0) : undefined,
+                mentionnable: options?.mentionnable !== undefined
+                    ? options?.mentionnable
                         ? 1
                         : 0
                     : undefined,

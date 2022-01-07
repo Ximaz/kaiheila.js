@@ -11,40 +11,40 @@ class DirectMessage {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    async list({ chatCode, targetId, msgId, flag, page, pageSize, }) {
+    async list(options) {
         return (await this.#API.execute(this.#routes.directMessageList, {
             params: {
-                chat_code: chatCode,
-                target_id: targetId,
-                msg_id: msgId,
-                flag: flag,
-                page,
-                page_size: pageSize,
+                chat_code: options?.chatCode,
+                target_id: options?.targetId,
+                msg_id: options?.msgId,
+                flag: options?.flag,
+                page: options?.page,
+                page_size: options?.pageSize,
             },
         })).data.data;
     }
-    async create(content, { type, targetId, chatCode, quote, nonce, }) {
+    async create(content, options) {
         return (await this.#API.execute(this.#routes.directMessageCreate, {
             data: {
                 content,
-                type: type === 'KMARKDOWN'
+                type: options?.type === "KMARKDOWN"
                     ? 9
-                    : type === 'CARD_MESSAGE'
+                    : options?.type === "CARD_MESSAGE"
                         ? 10
                         : 1,
-                chat_code: chatCode,
-                target_id: targetId,
-                quote,
-                nonce,
+                chat_code: options?.chatCode,
+                target_id: options?.targetId,
+                quote: options?.quote,
+                nonce: options?.nonce,
             },
         })).data.data;
     }
-    async update(content, { msgId, quote, }) {
+    async update(content, options) {
         return await this.#API.execute(this.#routes.directMessageUpdate, {
             data: {
                 content,
-                msg_id: msgId,
-                quote,
+                msg_id: options?.msgId,
+                quote: options?.quote,
             },
         });
     }
@@ -55,9 +55,9 @@ class DirectMessage {
             },
         });
     }
-    async listReaction(msgId, { emoji }) {
+    async listReaction(msgId, options) {
         return (await this.#API.execute(this.#routes.directMessageListReaction, {
-            params: { msg_id: msgId, emoji },
+            params: { msg_id: msgId, emoji: options?.emoji },
         })).data.data;
     }
     async addReaction(msgId, emoji) {
@@ -65,9 +65,9 @@ class DirectMessage {
             data: { msg_id: msgId, emoji },
         });
     }
-    async deleteReaction(msgId, emoji, { userId }) {
+    async deleteReaction(msgId, emoji, options) {
         return await this.#API.execute(this.#routes.directMessageDeleteReaction, {
-            data: { msg_id: msgId, emoji, user_id: userId },
+            data: { msg_id: msgId, emoji, user_id: options?.userId },
         });
     }
 }

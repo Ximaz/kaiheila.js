@@ -1,4 +1,4 @@
-import Client from '../../index';
+import Client from "../../index";
 declare interface IntimacyImgList {
     id: string;
     url: string;
@@ -15,7 +15,7 @@ export default class IntimacyManager {
     #private;
     constructor(client: Client);
     view(userId: string): Promise<Intimacy>;
-    update(userId: string, { score, socialInfo, imgId, }: {
+    update(userId: string, options?: {
         score?: string;
         socialInfo?: string;
         imgId?: string;

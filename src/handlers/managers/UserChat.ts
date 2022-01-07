@@ -42,12 +42,12 @@ export default class UserChatManager {
      * Get a list of private chat chat sessions.
      *
      */
-    async list({ page, pageSize }: { page?: number; pageSize?: number }) {
+    async list(options?: { page?: number; pageSize?: number }) {
         return (
             await this.#API.execute(this.#routes.userChatList, {
                 params: {
-                    page,
-                    page_size: pageSize,
+                    page: options?.page,
+                    page_size: options?.pageSize,
                 },
             })
         ).data.data as UserChatList

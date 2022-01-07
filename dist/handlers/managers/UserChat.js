@@ -11,11 +11,11 @@ class UserChatManager {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    async list({ page, pageSize }) {
+    async list(options) {
         return (await this.#API.execute(this.#routes.userChatList, {
             params: {
-                page,
-                page_size: pageSize,
+                page: options?.page,
+                page_size: options?.pageSize,
             },
         })).data.data;
     }

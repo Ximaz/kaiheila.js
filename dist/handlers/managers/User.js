@@ -14,9 +14,9 @@ class UserManager {
     async me() {
         return (await this.#API.execute(this.#routes.me)).data.data;
     }
-    async view(userId, { guildId }) {
+    async view(userId, options) {
         return (await this.#API.execute(this.#routes.userView, {
-            params: { user_id: userId, guild_id: guildId },
+            params: { user_id: userId, guild_id: options?.guildId },
         })).data.data;
     }
     async offline() {

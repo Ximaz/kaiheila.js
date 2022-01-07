@@ -1,6 +1,6 @@
-import { AxiosResponse } from 'axios';
-import { ClientTokenType } from '../typings/Client';
-import Routes, { Route } from '../typings/Router';
+import { AxiosResponse } from "axios";
+import { ClientTokenType } from "../typings/Client";
+import Routes, { Route } from "../typings/Router";
 export declare interface ApiHandlerOptions {
     tokenType: ClientTokenType;
     lang: string;
@@ -8,7 +8,7 @@ export declare interface ApiHandlerOptions {
 declare class ApiHandler {
     #private;
     routes: Routes;
-    constructor(token: string, { tokenType, lang }: ApiHandlerOptions);
+    constructor(token: string, options?: ApiHandlerOptions);
     private getRoute;
     execute(route: Route, options?: {
         headers?: any;

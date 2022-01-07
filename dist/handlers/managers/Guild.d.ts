@@ -1,6 +1,6 @@
 /// <reference types="node" />
-import Client from '../../index';
-import FormData, { Stream } from 'form-data';
+import Client from "../../index";
+import FormData, { Stream } from "form-data";
 declare interface GuildChannel {
     id: number;
     guild_id: string;
@@ -187,7 +187,7 @@ declare interface GuildBlacklistList {
 declare class GuildEmojiManager {
     #private;
     constructor(client: Client);
-    list(guildId: string, { page, pageSize }: {
+    list(guildId: string, options?: {
         page?: number;
         pageSize?: number;
     }): Promise<GuildEmojiList>;
@@ -198,27 +198,27 @@ declare class GuildEmojiManager {
 declare class GuildInviteManager {
     #private;
     constructor(client: Client);
-    list(targetId: string, { targetType, page, pageSize, }: {
-        targetType: 'CHANNEL' | 'GUILD';
+    list(targetId: string, options?: {
+        targetType?: "CHANNEL" | "GUILD";
         page?: number;
         pageSize?: number;
     }): Promise<GuildInvites>;
-    create(targetId: string, { duration, settingTimes, targetType, }: {
-        targetType: 'CHANNEL' | 'GUILD';
-        duration: 'LIFETIME' | 'HALF_HOUR' | 'ONE_HOUR' | 'SIX_HOURS' | 'TWELVE_HOURS' | 'ONE_DAY' | 'SEVEN_DAYS';
-        settingTimes?: 'UNLIMITED' | 'ONE_USE' | 'FIVE_USES' | 'TEN_USES' | 'TWENTY_FIVE_USES' | 'FIFTY_USES' | 'HUNDRED_USES';
+    create(targetId: string, options?: {
+        targetType?: "CHANNEL" | "GUILD";
+        duration?: "LIFETIME" | "HALF_HOUR" | "ONE_HOUR" | "SIX_HOURS" | "TWELVE_HOURS" | "ONE_DAY" | "SEVEN_DAYS";
+        settingTimes?: "UNLIMITED" | "ONE_USE" | "FIVE_USES" | "TEN_USES" | "TWENTY_FIVE_USES" | "FIFTY_USES" | "HUNDRED_USES";
     }): Promise<string>;
-    delete(urlCode: string, targetId: string, { targetType, }: {
-        targetType: 'CHANNEL' | 'GUILD';
+    delete(urlCode: string, targetId: string, options?: {
+        targetType?: "CHANNEL" | "GUILD";
     }): Promise<void>;
 }
 declare class GuildBlacklistManager {
     #private;
     constructor(client: Client);
     list(guildId: string): Promise<GuildBlacklistList>;
-    create(guildId: string, userId: string, { remark, delMsgDays, }: {
+    create(guildId: string, userId: string, options?: {
         remark?: string;
-        delMsgDays?: 'ONE_DAY' | 'SEVEN_DAYS' | 'DONT_DElETE';
+        delMsgDays?: "ONE_DAY" | "SEVEN_DAYS" | "DONT_DElETE";
     }): Promise<import("axios").AxiosResponse<any>>;
     delete(guildId: string, userId: string): Promise<import("axios").AxiosResponse<any>>;
 }
@@ -228,13 +228,13 @@ export default class GuildManager {
     invite: GuildInviteManager;
     blacklist: GuildBlacklistManager;
     constructor(client: Client);
-    list({ page, pageSize, sort, }: {
+    list(options?: {
         page?: number;
         pageSize?: number;
-        sort?: 'DESC' | 'ASC';
+        sort?: "DESC" | "ASC";
     }): Promise<Guilds>;
     view(guildId: string): Promise<FullGuild>;
-    userList(guildId: string, { channelId, search, roleId, mobileVerified, activeTime, joinedAt, page, pageSize, filterUserId, }: {
+    userList(guildId: string, options?: {
         channelId?: string;
         search?: string;
         roleId?: number;

@@ -29,7 +29,7 @@ declare interface UserChatList {
 export default class UserChatManager {
     #private;
     constructor(client: Client);
-    list({ page, pageSize }: {
+    list(options?: {
         page?: number;
         pageSize?: number;
     }): Promise<UserChatList>;

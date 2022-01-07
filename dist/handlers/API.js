@@ -6,19 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const Router_1 = __importDefault(require("../typings/Router"));
 const BASE_URL = `https://www.kaiheila.cn/api/v3`;
-let cookie = '';
+let cookie = "";
 class ApiHandler {
     #handler;
     routes;
-    constructor(token, { tokenType = 'BOT', lang = 'en-US' }) {
+    constructor(token, options = { tokenType: "BOT", lang: "en-US" }) {
         this.#handler = axios_1.default.create({
             headers: {
-                'Accept-Language': lang,
-                Authorization: `${tokenType === 'USER'
-                    ? ''
-                    : tokenType === 'BEARER'
-                        ? 'Bearer'
-                        : 'Bot'} ${token}`,
+                "Accept-Language": options?.lang,
+                Authorization: `${options?.tokenType === "USER" ? "" : options?.tokenType === "BEARER" ? "Bearer" : "Bot"} ${token}`,
             },
             baseURL: BASE_URL,
         });
@@ -33,8 +29,8 @@ class ApiHandler {
                 ...this.#handler.defaults.headers,
                 ...options?.headers,
             };
-            if (cookie !== '')
-                headers['Cookie'] = cookie;
+            if (cookie !== "")
+                headers["Cookie"] = cookie;
             const config = {
                 method,
                 url,
@@ -50,7 +46,7 @@ class ApiHandler {
             if (response.data.code && response.data.code !== 0) {
                 throw new Error(`${response.data.message} (Error code : ${response.data.code})`);
             }
-            cookie += `${cookie.length > 0 ? ';' : ''}${response.headers['set-cookie']}`;
+            cookie += `${cookie.length > 0 ? ";" : ""}${response.headers["set-cookie"]}`;
             return response;
         }
         catch (error) {
@@ -61,9 +57,9 @@ class ApiHandler {
     }
     handleRateLimit(ratelimitHeaders) {
         return {
-            isRatelimitReached: ratelimitHeaders['X-Rate-Limit-Remaining'] === '0',
-            delay: parseInt(ratelimitHeaders['X-Rate-Limit-Reset']) /
-                parseInt(ratelimitHeaders['X-Rate-Limit-Limit']),
+            isRatelimitReached: ratelimitHeaders["X-Rate-Limit-Remaining"] === "0",
+            delay: parseInt(ratelimitHeaders["X-Rate-Limit-Reset"]) /
+                parseInt(ratelimitHeaders["X-Rate-Limit-Limit"]),
         };
     }
 }

@@ -1,5 +1,5 @@
-import Client from '../../index';
-import Card from './Card';
+import Client from "../../index";
+import Card from "./Card";
 declare interface MessageEmbed {
     type: string;
     url: string;
@@ -114,15 +114,15 @@ declare interface MessageList {
 export default class MessageManager {
     #private;
     constructor(client: Client);
-    list(targetId: string, { msgId, pin, flag, pageSize, }: {
+    list(targetId: string, options?: {
         msgId: string;
         pin: number;
-        flag: 'before' | 'around' | 'after';
+        flag: "before" | "around" | "after";
         pageSize: number;
     }): Promise<MessageList>;
     view(msgId: string): Promise<Message>;
     create(targetId: string, content: string | Card[] | Card, options?: {
-        type?: 'KMARDOWN' | 'CARD';
+        type?: "KMARDOWN" | "CARD";
         quote?: string;
         nonce?: string;
         tempTargetId?: string;
@@ -131,14 +131,14 @@ export default class MessageManager {
         msg_timestamp: number;
         nonce: string;
     }>;
-    update(msgId: string, content: string, { quote, tempTargetId, }: {
+    update(msgId: string, content: string, options?: {
         quote?: string;
         tempTargetId?: string;
     }): Promise<import("axios").AxiosResponse<any>>;
     delete(msgId: string): Promise<import("axios").AxiosResponse<any>>;
     listReaction(msgId: string, emoji: string): Promise<MessageReactionUser[]>;
     addReaction(msgId: string, emoji: string): Promise<import("axios").AxiosResponse<any>>;
-    deleteReaction(msgId: string, emoji: string, { userId }: {
+    deleteReaction(msgId: string, emoji: string, options?: {
         userId?: string;
     }): Promise<import("axios").AxiosResponse<any>>;
 }

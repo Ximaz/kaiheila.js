@@ -1,4 +1,4 @@
-import Client from '../../index';
+import Client from "../../index";
 declare interface DirectMessageItem {
     id: string;
     type: number;
@@ -41,16 +41,16 @@ declare interface ReactionUser {
 export default class DirectMessage {
     #private;
     constructor(client: Client);
-    list({ chatCode, targetId, msgId, flag, page, pageSize, }: {
+    list(options?: {
         chatCode?: string;
         targetId?: string;
         msgId?: string;
-        flag: 'before' | 'around' | 'after';
+        flag: "before" | "around" | "after";
         page?: number;
         pageSize?: number;
     }): Promise<DirectMessageList>;
-    create(content: string, { type, targetId, chatCode, quote, nonce, }: {
-        type?: 'TEXT' | 'KMARKDOWN' | 'CARD_MESSAGE';
+    create(content: string, options?: {
+        type?: "TEXT" | "KMARKDOWN" | "CARD_MESSAGE";
         targetId?: string;
         chatCode?: string;
         quote?: string;
@@ -60,16 +60,16 @@ export default class DirectMessage {
         msg_timestamp: number;
         nonce: string;
     }>;
-    update(content: string, { msgId, quote, }: {
+    update(content: string, options?: {
         msgId?: string;
         quote?: string;
     }): Promise<import("axios").AxiosResponse<any>>;
     delete(msgId: string): Promise<import("axios").AxiosResponse<any>>;
-    listReaction(msgId: string, { emoji }: {
+    listReaction(msgId: string, options?: {
         emoji?: string;
     }): Promise<ReactionUser[]>;
     addReaction(msgId: string, emoji: string): Promise<import("axios").AxiosResponse<any>>;
-    deleteReaction(msgId: string, emoji: string, { userId }: {
+    deleteReaction(msgId: string, emoji: string, options?: {
         userId?: string;
     }): Promise<import("axios").AxiosResponse<any>>;
 }

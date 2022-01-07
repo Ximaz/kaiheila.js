@@ -14,14 +14,14 @@ class MessageManager {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    async list(targetId, { msgId, pin, flag, pageSize, }) {
+    async list(targetId, options) {
         return (await this.#API.execute(this.#routes.messageList, {
             params: {
                 target_id: targetId,
-                msg_id: msgId,
-                pin,
-                flag,
-                page_size: pageSize,
+                msg_id: options?.msgId,
+                pin: options?.pin,
+                flag: options?.flag,
+                page_size: options?.pageSize,
             },
         })).data.data;
     }
@@ -36,7 +36,7 @@ class MessageManager {
         if (content instanceof Card_1.default || content instanceof Array) {
             if (!options)
                 options = {};
-            options.type = 'CARD';
+            options.type = "CARD";
             if (!Array.isArray(content))
                 content = [new Card_1.default(this.#client, content)];
             else
@@ -49,9 +49,9 @@ class MessageManager {
             data: {
                 target_id: targetId,
                 content,
-                type: typeof content !== 'string' || options?.type === 'CARD'
+                type: typeof content !== "string" || options?.type === "CARD"
                     ? 10
-                    : options?.type === 'KMARDOWN'
+                    : options?.type === "KMARDOWN"
                         ? 9
                         : 1,
                 nonce: options?.nonce,
@@ -60,13 +60,13 @@ class MessageManager {
             },
         })).data.data;
     }
-    async update(msgId, content, { quote, tempTargetId, }) {
+    async update(msgId, content, options) {
         return await this.#API.execute(this.#routes.messageUpdate, {
             data: {
                 msg_id: msgId,
                 content,
-                quote,
-                temp_target_id: tempTargetId,
+                quote: options?.quote,
+                temp_target_id: options?.tempTargetId,
             },
         });
     }
@@ -93,12 +93,12 @@ class MessageManager {
             },
         });
     }
-    async deleteReaction(msgId, emoji, { userId }) {
+    async deleteReaction(msgId, emoji, options) {
         return await this.#API.execute(this.#routes.messageDeleteReaction, {
             data: {
                 msg_id: msgId,
                 emoji,
-                user_id: userId,
+                user_id: options?.userId,
             },
         });
     }

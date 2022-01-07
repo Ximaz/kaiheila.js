@@ -12,20 +12,20 @@ class GuildEmojiManager {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    async list(guildId, { page, pageSize }) {
+    async list(guildId, options) {
         return (await this.#API.execute(this.#routes.guildEmojiList, {
-            params: { guild_id: guildId, page, page_size: pageSize },
+            params: { guild_id: guildId, page: options?.page, page_size: options?.pageSize },
         })).data.data;
     }
     async create(name, guildId, emoji, uploadOptions) {
         const form = new form_data_1.default();
-        form.append('file', emoji, uploadOptions);
-        form.append('guild_id', guildId);
-        form.append('name', name);
+        form.append("file", emoji, uploadOptions);
+        form.append("guild_id", guildId);
+        form.append("name", name);
         return (await this.#API.execute(this.#routes.guildEmojiCreate, {
             data: form,
             headers: {
-                'content-type': form.getHeaders()['content-type'],
+                "content-type": form.getHeaders()["content-type"],
             },
         })).data.data;
     }
@@ -52,55 +52,55 @@ class GuildInviteManager {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    async list(targetId, { targetType, page, pageSize, }) {
+    async list(targetId, options) {
         return (await this.#API.execute(this.#routes.inviteList, {
             params: {
-                guild_id: targetType === 'GUILD' ? targetId : undefined,
-                channel_id: targetType === 'CHANNEL' ? targetId : undefined,
-                page,
-                page_size: pageSize,
+                guild_id: options?.targetType === "GUILD" ? targetId : undefined,
+                channel_id: options?.targetType === "CHANNEL" ? targetId : undefined,
+                page: options?.page,
+                page_size: options?.pageSize,
             },
         })).data.data;
     }
-    async create(targetId, { duration, settingTimes, targetType, }) {
+    async create(targetId, options) {
         return (await this.#API.execute(this.#routes.inviteCreate, {
             data: {
-                guild_id: targetType === 'GUILD' ? targetId : undefined,
-                channel_id: targetType === 'CHANNEL' ? targetId : undefined,
-                duration: duration === 'SEVEN_DAYS'
+                guild_id: options?.targetType === "GUILD" ? targetId : undefined,
+                channel_id: options?.targetType === "CHANNEL" ? targetId : undefined,
+                duration: options?.duration === "SEVEN_DAYS"
                     ? 604800
-                    : duration === 'ONE_DAY'
+                    : options?.duration === "ONE_DAY"
                         ? 86400
-                        : duration === 'TWELVE_HOURS'
+                        : options?.duration === "TWELVE_HOURS"
                             ? 43200
-                            : duration === 'SIX_HOURS'
+                            : options?.duration === "SIX_HOURS"
                                 ? 21600
-                                : duration === 'ONE_HOUR'
+                                : options?.duration === "ONE_HOUR"
                                     ? 3600
-                                    : duration === 'HALF_HOUR'
+                                    : options?.duration === "HALF_HOUR"
                                         ? 1800
                                         : 0,
-                setting_times: settingTimes === 'HUNDRED_USES'
+                setting_times: options?.settingTimes === "HUNDRED_USES"
                     ? 100
-                    : settingTimes === 'FIFTY_USES'
+                    : options?.settingTimes === "FIFTY_USES"
                         ? 50
-                        : settingTimes === 'TWENTY_FIVE_USES'
+                        : options?.settingTimes === "TWENTY_FIVE_USES"
                             ? 25
-                            : settingTimes === 'TEN_USES'
+                            : options?.settingTimes === "TEN_USES"
                                 ? 10
-                                : settingTimes === 'FIVE_USES'
+                                : options?.settingTimes === "FIVE_USES"
                                     ? 5
-                                    : settingTimes === 'ONE_USE'
+                                    : options?.settingTimes === "ONE_USE"
                                         ? 1
                                         : -1,
             },
         })).data.data.url;
     }
-    async delete(urlCode, targetId, { targetType, }) {
+    async delete(urlCode, targetId, options) {
         await this.#API.execute(this.#routes.inviteDelete, {
             data: {
-                guild_id: targetType === 'GUILD' ? targetId : undefined,
-                channel_id: targetType === 'CHANNEL' ? targetId : undefined,
+                guild_id: options?.targetType === "GUILD" ? targetId : undefined,
+                channel_id: options?.targetType === "CHANNEL" ? targetId : undefined,
                 url_code: urlCode,
             },
         });
@@ -118,15 +118,15 @@ class GuildBlacklistManager {
             params: { guild_id: guildId },
         })).data.data;
     }
-    async create(guildId, userId, { remark, delMsgDays, }) {
+    async create(guildId, userId, options) {
         return await this.#API.execute(this.#routes.blacklistCreate, {
             data: {
                 guild_id: guildId,
                 target_id: userId,
-                remark,
-                del_msg_days: delMsgDays === 'SEVEN_DAYS'
+                remark: options?.remark,
+                del_msg_days: options?.delMsgDays === "SEVEN_DAYS"
                     ? 7
-                    : delMsgDays === 'ONE_DAY'
+                    : options?.delMsgDays === "ONE_DAY"
                         ? 1
                         : 0,
             },
@@ -154,9 +154,13 @@ class GuildManager {
         this.invite = new GuildInviteManager(client);
         this.blacklist = new GuildBlacklistManager(client);
     }
-    async list({ page, pageSize, sort, }) {
+    async list(options) {
         return (await this.#API.execute(this.#routes.guildList, {
-            params: { page, pageSize, sort },
+            params: {
+                page: options?.page,
+                page_size: options?.pageSize,
+                sort: options?.sort,
+            },
         })).data.data;
     }
     async view(guildId) {
@@ -164,25 +168,25 @@ class GuildManager {
             params: { guild_id: guildId },
         })).data.data;
     }
-    async userList(guildId, { channelId, search, roleId, mobileVerified, activeTime, joinedAt, page, pageSize, filterUserId, }) {
+    async userList(guildId, options) {
         return (await this.#API.execute(this.#routes.guildUserList, {
             params: {
                 guild_id: guildId,
-                channel_id: channelId,
-                search: search,
-                role_id: roleId,
-                mobile_verified: mobileVerified,
-                active_time: activeTime,
-                joined_at: joinedAt,
-                page: page,
-                page_size: pageSize,
-                filter_user_id: filterUserId,
+                channel_id: options?.channelId,
+                search: options?.search,
+                role_id: options?.roleId,
+                mobile_verified: options?.mobileVerified,
+                active_time: options?.activeTime,
+                joined_at: options?.joinedAt,
+                page: options?.page,
+                page_size: options?.pageSize,
+                filter_user_id: options?.filterUserId,
             },
         })).data.data;
     }
     async setNickname(guildId, userId, nickname) {
         if (nickname.length < 2 || nickname.length > 64)
-            throw new Error('The nickname must be from 2 to 64 characters long.');
+            throw new Error("The nickname must be from 2 to 64 characters long.");
         return await this.#API.execute(this.#routes.guildNickname, {
             data: {
                 guild_id: guildId,
@@ -201,7 +205,7 @@ class GuildManager {
             data: { guild_id: guildId, target_id: targetId },
         });
     }
-    async getMuteAndDeaf(guildId, returnType = 'detail') {
+    async getMuteAndDeaf(guildId, returnType = "detail") {
         return (await this.#API.execute(this.#routes.guildMuteList, {
             params: { guild_id: guildId, return_type: returnType },
         })).data.data;

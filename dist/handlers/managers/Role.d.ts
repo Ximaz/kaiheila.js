@@ -1,6 +1,6 @@
-import Client from '../../index';
-import { BitFields } from './index';
-import Role from '../../typings/objects/Role';
+import Client from "../../index";
+import { BitFields } from "./index";
+import Role from "../../typings/objects/Role";
 declare interface Roles {
     items: Role[];
     meta: {
@@ -16,17 +16,17 @@ declare interface Roles {
 export default class RoleManager {
     #private;
     constructor(client: Client);
-    list(guildId: string, { page, pageSize }: {
+    list(guildId: string, options?: {
         page?: number;
         pageSize?: number;
     }): Promise<Roles>;
-    create(guildId: string, name: string, { hoist, mentionnable, color, permissions, }: {
+    create(guildId: string, name: string, options?: {
         hoist?: boolean;
         mentionnable?: boolean;
         color?: number;
         permissions?: BitFields[];
     }): Promise<Role>;
-    update(guildId: string, roleId: number, { hoist, mentionnable, color, permissions, name, }: {
+    update(guildId: string, roleId: number, options?: {
         hoist?: boolean;
         mentionnable?: boolean;
         color?: number;

@@ -11,13 +11,13 @@ class ChannelManager {
         this.#API = new API_1.default(client.token, client.options);
         this.#routes = this.#API.routes;
     }
-    async list(guildId, { page, pageSize, type, }) {
+    async list(guildId, options) {
         return (await this.#API.execute(this.#routes.channelList, {
             params: {
                 guild_id: guildId,
-                page,
-                page_size: pageSize,
-                type: type === 'VOICE' ? 2 : 1,
+                page: options?.page,
+                page_size: options?.pageSize,
+                type: options?.type === "VOICE" ? 2 : 1,
             },
         })).data.data;
     }
@@ -26,17 +26,17 @@ class ChannelManager {
             params: { target_id: targetId },
         })).data.data;
     }
-    async create(guildId, name, { parentId, type, limitAmount, voiceQuality, }) {
+    async create(guildId, name, options) {
         return (await this.#API.execute(this.#routes.channelCreate, {
             data: {
                 guild_id: guildId,
                 name,
-                parent_id: parentId,
-                type: type === 'VOICE' ? 2 : 1,
-                limit_amount: limitAmount,
-                voice_quality: voiceQuality === 'LOW'
+                parent_id: options?.parentId,
+                type: options?.type === "VOICE" ? 2 : 1,
+                limit_amount: options?.limitAmount,
+                voice_quality: options?.voiceQuality === "LOW"
                     ? 1
-                    : voiceQuality === 'HIGH'
+                    : options?.voiceQuality === "HIGH"
                         ? 3
                         : 2,
             },
@@ -57,32 +57,32 @@ class ChannelManager {
             params: { channel_id: targetId },
         })).data.data;
     }
-    async permissionOverwrite(targetId, { type, value, }) {
+    async permissionOverwrite(targetId, options) {
         return (await this.#API.execute(this.#routes.channelRoleCreate, {
             data: {
                 target_id: targetId,
-                type: type === 'ROLE' ? 'role_id' : 'user_id',
-                value,
+                type: options?.type === "ROLE" ? "role_id" : "user_id",
+                value: options?.value,
             },
         })).data.data;
     }
-    async updatePermissionOverwrite(targetId, { type, value, allow, deny, }) {
+    async updatePermissionOverwrite(targetId, options) {
         return (await this.#API.execute(this.#routes.channelRoleUpdate, {
             data: {
                 target_id: targetId,
-                type: type === 'ROLE' ? 'role_id' : 'user_id',
-                value,
-                allow,
-                deny,
+                type: options?.type === "ROLE" ? "role_id" : "user_id",
+                value: options?.value,
+                allow: options?.allow,
+                deny: options?.deny,
             },
         })).data.data;
     }
-    async deletePermissionOverwrite(targetId, { type, value, }) {
+    async deletePermissionOverwrite(targetId, options) {
         return await this.#API.execute(this.#routes.channelRoleDelete, {
             data: {
                 target_id: targetId,
-                type: type === 'ROLE' ? 'role_id' : 'user_id',
-                value,
+                type: options?.type === "ROLE" ? "role_id" : "user_id",
+                value: options?.value,
             },
         });
     }

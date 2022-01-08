@@ -1,5 +1,5 @@
-import { BitFields } from ".";
-import { Client } from "../../index";
+import { BitFields } from '.';
+import { Client } from '../../index';
 declare interface Channel {
     id: string;
     master_id: string;
@@ -70,20 +70,21 @@ export default class ChannelManager {
     list(guildId: string, options?: {
         page?: number;
         pageSize?: number;
-        type: "TEXT" | "VOICE";
+        type: 'TEXT' | 'VOICE' | 'CATEGORY' | 'ALL';
     }): Promise<Channels>;
     view(targetId: string): Promise<FullChannel>;
     create(guildId: string, name: string, options?: {
         parentId?: string;
-        type?: "TEXT" | "VOICE";
+        type?: 'TEXT' | 'VOICE' | number;
         limitAmount?: number;
-        voiceQuality?: "LOW" | "NORMAL" | "HIGH";
+        voiceQuality?: 'LOW' | 'NORMAL' | 'HIGH' | number;
+        isCategory?: boolean;
     }): Promise<FullChannel>;
     delete(targetId: string): Promise<import("axios").AxiosResponse<any>>;
     move(voiceChannelId: string, userIds: string[]): Promise<import("axios").AxiosResponse<any>>;
     permissions(targetId: string): Promise<ChannelPermissions>;
     permissionOverwrite(targetId: string, options?: {
-        type: "USER" | "ROLE";
+        type: 'USER' | 'ROLE';
         value: string;
     }): Promise<{
         user_id?: string;
@@ -92,7 +93,7 @@ export default class ChannelManager {
         deny: number;
     }>;
     updatePermissionOverwrite(targetId: string, options?: {
-        type: "USER" | "ROLE";
+        type: 'USER' | 'ROLE';
         value: string;
         allow?: BitFields;
         deny?: BitFields;
@@ -103,7 +104,7 @@ export default class ChannelManager {
         deny: number;
     }>;
     deletePermissionOverwrite(targetId: string, options?: {
-        type: "USER" | "ROLE";
+        type: 'USER' | 'ROLE';
         value: string;
     }): Promise<import("axios").AxiosResponse<any>>;
 }

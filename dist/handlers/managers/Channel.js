@@ -17,7 +17,11 @@ class ChannelManager {
                 guild_id: guildId,
                 page: options?.page,
                 page_size: options?.pageSize,
-                type: options?.type === "VOICE" ? 2 : 1,
+                type: options?.type === 'CATEGORY'
+                    ? 3
+                    : options?.type === 'VOICE'
+                        ? 2
+                        : 1,
             },
         })).data.data;
     }
@@ -32,13 +36,20 @@ class ChannelManager {
                 guild_id: guildId,
                 name,
                 parent_id: options?.parentId,
-                type: options?.type === "VOICE" ? 2 : 1,
+                type: !Number.isNaN(options?.type)
+                    ? options?.type
+                    : options?.type === 'VOICE'
+                        ? 2
+                        : 1,
                 limit_amount: options?.limitAmount,
-                voice_quality: options?.voiceQuality === "LOW"
-                    ? 1
-                    : options?.voiceQuality === "HIGH"
-                        ? 3
-                        : 2,
+                voice_quality: !Number.isNaN(options?.type)
+                    ? options?.type
+                    : options?.voiceQuality === 'LOW'
+                        ? 1
+                        : options?.voiceQuality === 'HIGH'
+                            ? 3
+                            : 2,
+                is_category: options?.isCategory ? 1 : 0,
             },
         })).data.data;
     }
@@ -61,7 +72,7 @@ class ChannelManager {
         return (await this.#API.execute(this.#routes.channelRoleCreate, {
             data: {
                 target_id: targetId,
-                type: options?.type === "ROLE" ? "role_id" : "user_id",
+                type: options?.type === 'ROLE' ? 'role_id' : 'user_id',
                 value: options?.value,
             },
         })).data.data;
@@ -70,7 +81,7 @@ class ChannelManager {
         return (await this.#API.execute(this.#routes.channelRoleUpdate, {
             data: {
                 target_id: targetId,
-                type: options?.type === "ROLE" ? "role_id" : "user_id",
+                type: options?.type === 'ROLE' ? 'role_id' : 'user_id',
                 value: options?.value,
                 allow: options?.allow,
                 deny: options?.deny,
@@ -81,7 +92,7 @@ class ChannelManager {
         return await this.#API.execute(this.#routes.channelRoleDelete, {
             data: {
                 target_id: targetId,
-                type: options?.type === "ROLE" ? "role_id" : "user_id",
+                type: options?.type === 'ROLE' ? 'role_id' : 'user_id',
                 value: options?.value,
             },
         });

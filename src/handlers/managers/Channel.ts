@@ -86,7 +86,11 @@ export default class ChannelManager {
      */
     async list(
         guildId: string,
-        options?: { page?: number; pageSize?: number; type: 'TEXT' | 'VOICE' }
+        options?: {
+            page?: number
+            pageSize?: number
+            type: 'TEXT' | 'VOICE' | 'CATEGORY' | 'ALL'
+        }
     ) {
         return (
             await this.#API.execute(this.#routes.channelList, {
@@ -94,7 +98,12 @@ export default class ChannelManager {
                     guild_id: guildId,
                     page: options?.page,
                     page_size: options?.pageSize,
-                    type: options?.type === 'VOICE' ? 2 : 1,
+                    type:
+                        options?.type === 'CATEGORY'
+                            ? 3
+                            : options?.type === 'VOICE'
+                            ? 2
+                            : 1,
                 },
             })
         ).data.data as Channels
@@ -124,6 +133,7 @@ export default class ChannelManager {
             type?: 'TEXT' | 'VOICE' | number
             limitAmount?: number
             voiceQuality?: 'LOW' | 'NORMAL' | 'HIGH' | number
+            isCategory?: boolean
         }
     ) {
         return (
@@ -145,6 +155,7 @@ export default class ChannelManager {
                         : options?.voiceQuality === 'HIGH'
                         ? 3
                         : 2,
+                    is_category: options?.isCategory ? 1 : 0,
                 },
             })
         ).data.data as FullChannel

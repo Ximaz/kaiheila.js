@@ -36,11 +36,7 @@ Join the KaiheilaJS support by click [right there](https://kaihei.co/qq794e).
 ```js
 const Kaiheila = require('kaiheilajs'),
     { token, prefix } = require('./config.example.json'),
-    client = new Kaiheila.Client(token, {
-        lang: 'en-us',
-        packetCompression: true,
-        tokenType: 'BOT',
-    })
+    client = new Kaiheila.Client(token)
 
 client.once('ready', function (sessionId) {
     console.log(`Client is connected ! Session ID : ${sessionId}`)

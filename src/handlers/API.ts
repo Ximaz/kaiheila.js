@@ -9,8 +9,6 @@ export declare interface ApiHandlerOptions {
   lang: string;
 }
 
-let cookie = "";
-
 class ApiHandler {
   #handler;
   routes: Routes;
@@ -22,7 +20,11 @@ class ApiHandler {
       headers: {
         "Accept-Language": options?.lang,
         Authorization: `${
-          options?.tokenType === "USER" ? "" : options?.tokenType === "BEARER" ? "Bearer" : "Bot"
+          options?.tokenType === "USER"
+            ? ""
+            : options?.tokenType === "BEARER"
+            ? "Bearer"
+            : "Bot"
         } ${token}`,
       },
       baseURL: BASE_URL,
@@ -44,19 +46,15 @@ class ApiHandler {
   ): Promise<AxiosResponse> {
     try {
       const { method, url } = this.getRoute(route),
-        headers = {
-          ...this.#handler.defaults.headers,
-          ...options?.headers,
-        };
-
-      if (cookie !== "") headers["Cookie"] = cookie;
-
-      const config: AxiosRequestConfig = {
+        config: AxiosRequestConfig = {
           method,
           url,
           data: options?.data,
           params: options?.params,
-          headers,
+          headers: {
+            ...this.#handler.defaults.headers,
+            ...options?.headers,
+          },
         },
         response = await this.#handler.request(config),
         { isRatelimitReached, delay } = this.handleRateLimit(response.headers);
@@ -72,9 +70,6 @@ class ApiHandler {
         );
       }
 
-      cookie += `${cookie.length > 0 ? ";" : ""}${
-        response.headers["set-cookie"]
-      }`;
       return response;
     } catch (error: any) {
       if (error.response?.data)

@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const Router_1 = __importDefault(require("../typings/Router"));
 const BASE_URL = `https://www.kaiheila.cn/api/v3`;
-let cookie = "";
 class ApiHandler {
     #handler;
     routes;
@@ -14,7 +13,11 @@ class ApiHandler {
         this.#handler = axios_1.default.create({
             headers: {
                 "Accept-Language": options?.lang,
-                Authorization: `${options?.tokenType === "USER" ? "" : options?.tokenType === "BEARER" ? "Bearer" : "Bot"} ${token}`,
+                Authorization: `${options?.tokenType === "USER"
+                    ? ""
+                    : options?.tokenType === "BEARER"
+                        ? "Bearer"
+                        : "Bot"} ${token}`,
             },
             baseURL: BASE_URL,
         });
@@ -25,18 +28,15 @@ class ApiHandler {
     }
     async execute(route, options) {
         try {
-            const { method, url } = this.getRoute(route), headers = {
-                ...this.#handler.defaults.headers,
-                ...options?.headers,
-            };
-            if (cookie !== "")
-                headers["Cookie"] = cookie;
-            const config = {
+            const { method, url } = this.getRoute(route), config = {
                 method,
                 url,
                 data: options?.data,
                 params: options?.params,
-                headers,
+                headers: {
+                    ...this.#handler.defaults.headers,
+                    ...options?.headers,
+                },
             }, response = await this.#handler.request(config), { isRatelimitReached, delay } = this.handleRateLimit(response.headers);
             if (isRatelimitReached) {
                 const timeout = setTimeout(() => 0, (delay + 1) * 1000);
@@ -46,7 +46,6 @@ class ApiHandler {
             if (response.data.code && response.data.code !== 0) {
                 throw new Error(`${response.data.message} (Error code : ${response.data.code})`);
             }
-            cookie += `${cookie.length > 0 ? ";" : ""}${response.headers["set-cookie"]}`;
             return response;
         }
         catch (error) {

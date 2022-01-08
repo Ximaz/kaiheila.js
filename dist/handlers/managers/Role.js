@@ -35,8 +35,10 @@ class RoleManager {
     async update(guildId, roleId, options) {
         let pFlags = 0;
         if (options?.permissions) {
-            for (const p of options?.permissions) {
-                pFlags += index_1.Bits[p];
+            if (Array.isArray(options.permissions)) {
+                for (const p of options.permissions) {
+                    pFlags += index_1.Bits[p];
+                }
             }
         }
         return (await this.#API.execute(this.#routes.roleUpdate, {
@@ -46,7 +48,11 @@ class RoleManager {
                 permissions: options?.permissions ? pFlags : undefined,
                 color: options?.color,
                 name: options?.name,
-                hoist: options?.hoist !== undefined ? (options?.hoist ? 1 : 0) : undefined,
+                hoist: options?.hoist !== undefined
+                    ? options?.hoist
+                        ? 1
+                        : 0
+                    : undefined,
                 mentionnable: options?.mentionnable !== undefined
                     ? options?.mentionnable
                         ? 1

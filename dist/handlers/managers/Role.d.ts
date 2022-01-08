@@ -1,6 +1,6 @@
-import { Client } from "../../index";
-import { BitFields } from "./index";
-import Role from "../../typings/objects/Role";
+import { Client } from '../../index';
+import { BitFields } from './index';
+import Role from '../../typings/objects/Role';
 declare interface Roles {
     items: Role[];
     meta: {
@@ -30,7 +30,7 @@ export default class RoleManager {
         hoist?: boolean;
         mentionnable?: boolean;
         color?: number;
-        permissions?: BitFields[];
+        permissions?: BitFields[] | number;
         name?: string;
     }): Promise<Role>;
     delete(guildId: string, roleId: number): Promise<import("axios").AxiosResponse<any>>;

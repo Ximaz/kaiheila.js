@@ -1,4 +1,4 @@
-import Client from "../../index";
+import { Client } from "../../index";
 import API from "../API";
 import Card from "./Card";
 

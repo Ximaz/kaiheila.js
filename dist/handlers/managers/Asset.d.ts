@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import Client from '../../index';
+import { Client } from '../../index';
 import FormData, { Stream } from 'form-data';
 export default class AssetManager {
     #private;

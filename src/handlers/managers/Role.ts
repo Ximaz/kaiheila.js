@@ -1,4 +1,4 @@
-import Client from "../../index";
+import { Client } from "../../index";
 import API from "../API";
 import { BitFields, Bits } from "./index";
 import Role from "../../typings/objects/Role";

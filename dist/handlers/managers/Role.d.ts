@@ -1,4 +1,4 @@
-import Client from "../../index";
+import { Client } from "../../index";
 import { BitFields } from "./index";
 import Role from "../../typings/objects/Role";
 declare interface Roles {

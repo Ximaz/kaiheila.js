@@ -1,4 +1,4 @@
-import Client from '../../index';
+import { Client } from '../../index';
 declare interface UserChatListItem {
     code: string;
     last_read_time: number;

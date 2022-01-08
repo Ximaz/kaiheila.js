@@ -1,4 +1,4 @@
-import Client from "../../index";
+import { Client } from "../../index";
 import SelfUser from "../../typings/objects/SelfUser";
 import User from "../../typings/objects/User";
 export default class UserManager {

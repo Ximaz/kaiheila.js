@@ -2,7 +2,7 @@
 import { EventEmitter } from 'events';
 import { ClientOptions } from './typings/Client';
 import { Channel, DirectMessage, Guild, GuildMember, GuildRole, User, Message } from './typings/events/index';
-import * as Manager from './handlers/managers/index';
+import { AssetManager, ChannelManager, DirectMessageManager, GuildManager, IntimacyManager, MessageManager, RoleManager, UserChatManager, UserManager } from './handlers/managers/index';
 import Card from './handlers/managers/Card';
 declare type GlobalEvents = {
     ready: (sessionId: string) => void;
@@ -47,15 +47,15 @@ declare interface Client {
     emit<U extends keyof GlobalEvents>(event: U, ...args: Parameters<GlobalEvents[U]>): boolean;
 }
 declare interface Managers {
-    user: Manager.UserManager;
-    userChat: Manager.UserChatManager;
-    directMessage: Manager.DirectMessageManager;
-    asset: Manager.AssetManager;
-    role: Manager.RoleManager;
-    guild: Manager.GuildManager;
-    channel: Manager.ChannelManager;
-    intimacy: Manager.IntimacyManager;
-    message: Manager.MessageManager;
+    user: UserManager;
+    userChat: UserChatManager;
+    directMessage: DirectMessageManager;
+    asset: AssetManager;
+    role: RoleManager;
+    guild: GuildManager;
+    channel: ChannelManager;
+    intimacy: IntimacyManager;
+    message: MessageManager;
 }
 declare class Client extends EventEmitter {
     #private;
@@ -69,4 +69,3 @@ declare class Client extends EventEmitter {
     private getWebsocketURL;
 }
 export { Client, Card };
-export default Client;

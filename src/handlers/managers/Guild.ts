@@ -1,4 +1,4 @@
-import Client from "../../index";
+import { Client } from "../../index";
 import API from "../API";
 import FormData, { Stream } from "form-data";
 

@@ -13,7 +13,17 @@ import {
     User,
     Message,
 } from './typings/events/index'
-import * as Manager from './handlers/managers/index'
+import {
+    AssetManager,
+    ChannelManager,
+    DirectMessageManager,
+    GuildManager,
+    IntimacyManager,
+    MessageManager,
+    RoleManager,
+    UserChatManager,
+    UserManager,
+} from './handlers/managers/index'
 import Card from './handlers/managers/Card'
 
 type GlobalEvents = {
@@ -81,15 +91,15 @@ declare interface Client {
 }
 
 declare interface Managers {
-    user: Manager.UserManager
-    userChat: Manager.UserChatManager
-    directMessage: Manager.DirectMessageManager
-    asset: Manager.AssetManager
-    role: Manager.RoleManager
-    guild: Manager.GuildManager
-    channel: Manager.ChannelManager
-    intimacy: Manager.IntimacyManager
-    message: Manager.MessageManager
+    user: UserManager
+    userChat: UserChatManager
+    directMessage: DirectMessageManager
+    asset: AssetManager
+    role: RoleManager
+    guild: GuildManager
+    channel: ChannelManager
+    intimacy: IntimacyManager
+    message: MessageManager
 }
 
 class Client extends EventEmitter {
@@ -122,15 +132,15 @@ class Client extends EventEmitter {
         this.#API = new API(token, this.options)
         this.#socket = undefined
         this.managers = {
-            user: new Manager.UserManager(this),
-            userChat: new Manager.UserChatManager(this),
-            directMessage: new Manager.DirectMessageManager(this),
-            asset: new Manager.AssetManager(this),
-            role: new Manager.RoleManager(this),
-            guild: new Manager.GuildManager(this),
-            channel: new Manager.ChannelManager(this),
-            intimacy: new Manager.IntimacyManager(this),
-            message: new Manager.MessageManager(this),
+            user: new UserManager(this),
+            userChat: new UserChatManager(this),
+            directMessage: new DirectMessageManager(this),
+            asset: new AssetManager(this),
+            role: new RoleManager(this),
+            guild: new GuildManager(this),
+            channel: new ChannelManager(this),
+            intimacy: new IntimacyManager(this),
+            message: new MessageManager(this),
         }
         this.sessionId = ''
     }
@@ -268,5 +278,3 @@ class Client extends EventEmitter {
 }
 
 export { Client, Card }
-
-export default Client

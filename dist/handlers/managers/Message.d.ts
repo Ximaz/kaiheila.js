@@ -1,4 +1,4 @@
-import Client from "../../index";
+import { Client } from "../../index";
 import Card from "./Card";
 declare interface MessageEmbed {
     type: string;

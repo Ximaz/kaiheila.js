@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import Client from '../../index';
+import { Client } from '../../index';
 import childProcess from 'child_process';
 import ws from 'ws';
 export default class VoiceManager {

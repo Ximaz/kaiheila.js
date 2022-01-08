@@ -1,5 +1,5 @@
 import { BitFields } from ".";
-import Client from "../../index";
+import { Client } from "../../index";
 declare interface Channel {
     id: string;
     master_id: string;

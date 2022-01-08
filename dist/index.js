@@ -1,23 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -27,7 +8,7 @@ const events_1 = require("events");
 const API_1 = __importDefault(require("./handlers/API"));
 const Websocket_1 = __importDefault(require("./handlers/Websocket"));
 const Websocket_2 = require("./typings/handlers/Websocket");
-const Manager = __importStar(require("./handlers/managers/index"));
+const index_1 = require("./handlers/managers/index");
 const Card_1 = __importDefault(require("./handlers/managers/Card"));
 exports.Card = Card_1.default;
 class Client extends events_1.EventEmitter {
@@ -50,15 +31,15 @@ class Client extends events_1.EventEmitter {
         this.#API = new API_1.default(token, this.options);
         this.#socket = undefined;
         this.managers = {
-            user: new Manager.UserManager(this),
-            userChat: new Manager.UserChatManager(this),
-            directMessage: new Manager.DirectMessageManager(this),
-            asset: new Manager.AssetManager(this),
-            role: new Manager.RoleManager(this),
-            guild: new Manager.GuildManager(this),
-            channel: new Manager.ChannelManager(this),
-            intimacy: new Manager.IntimacyManager(this),
-            message: new Manager.MessageManager(this),
+            user: new index_1.UserManager(this),
+            userChat: new index_1.UserChatManager(this),
+            directMessage: new index_1.DirectMessageManager(this),
+            asset: new index_1.AssetManager(this),
+            role: new index_1.RoleManager(this),
+            guild: new index_1.GuildManager(this),
+            channel: new index_1.ChannelManager(this),
+            intimacy: new index_1.IntimacyManager(this),
+            message: new index_1.MessageManager(this),
         };
         this.sessionId = '';
     }
@@ -161,4 +142,3 @@ class Client extends events_1.EventEmitter {
     }
 }
 exports.Client = Client;
-exports.default = Client;

@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
 import { ClientOptions } from './typings/Client';
-import { Channel as ChannelEvent, DirectMessage as DirectMessageEvent, Guild as GuildEvent, GuildMember as GuildMemberEvent, GuildRole as GuildRoleEvent, User as UserEvent } from './typings/events/index';
+import { Channel as ChannelEvent, DirectMessage as DirectMessageEvent, Guild as GuildEvent, GuildMember as GuildMemberEvent, GuildRole as GuildRoleEvent, User as UserEvent, Message as MessageEvent } from './typings/events/index';
 import { AssetManager, ChannelManager, DirectMessageManager, GuildManager, IntimacyManager, MessageManager, RoleManager, UserChatManager, UserManager } from './handlers/managers/index';
 import Card from './handlers/managers/Card';
 import User from './typings/objects/User';
@@ -9,7 +9,7 @@ declare type GlobalEvents = {
     ready: (sessionId: string) => void;
     disconnected: () => void;
     debug: (e: any) => void;
-    message: (message: MessageEvent) => void;
+    message: (message: MessageEvent.default) => void;
     addedChannel: (e: ChannelEvent.AddedChannel) => void;
     updatedChannel: (e: ChannelEvent.UpdatedChannel) => void;
     deletedChannel: (e: ChannelEvent.DeletedChannel) => void;

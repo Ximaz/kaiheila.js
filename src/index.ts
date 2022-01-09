@@ -33,7 +33,7 @@ type GlobalEvents = {
     disconnected: () => void
     debug: (e: any) => void
 
-    message: (message: MessageEvent) => void
+    message: (message: MessageEvent.default) => void
 
     // Channel events :
     addedChannel: (e: ChannelEvent.AddedChannel) => void

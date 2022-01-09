@@ -1,4 +1,4 @@
-export default interface User {
+export default class User {
     id: string;
     username: string;
     identify_num: string;
@@ -7,10 +7,11 @@ export default interface User {
     vip_avatar: string;
     bot: boolean;
     status: number;
-    mobile_verified: boolean;
     nickname: string;
+    mobile_verified?: boolean;
     roles?: number[];
     os?: string;
     joined_at?: number;
     active_time?: number;
+    constructor();
 }

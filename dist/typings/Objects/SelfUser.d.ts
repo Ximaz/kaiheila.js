@@ -1,4 +1,4 @@
-export default interface SelfUser {
+export default class SelfUser {
     id: string;
     username: string;
     identify_num: string;
@@ -11,4 +11,5 @@ export default interface SelfUser {
     mobile_prefix: string;
     mobile: string;
     invited_count: number;
+    constructor();
 }

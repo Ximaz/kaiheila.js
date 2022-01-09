@@ -1,5 +1,4 @@
-import User from "./User"
-
+import User from './User'
 
 export interface PermissionOverwrite {
     role_id: number
@@ -13,7 +12,7 @@ export interface PermissionUser {
     deny: number
 }
 
-export default interface Channel {
+export default class Channel {
     id: string
     name: string
     user_id: string
@@ -29,4 +28,16 @@ export default interface Channel {
     permission_overwrites?: PermissionOverwrite[]
     permission_users?: PermissionUser[]
     permission_sync?: number
+    constructor() {
+        this.id = ''
+        this.name = ''
+        this.user_id = ''
+        this.guild_id = ''
+        this.is_category = false
+        this.parent_id = ''
+        this.level = 0
+        this.slow_mode = 0
+        this.topic = ''
+        this.type = 0
+    }
 }

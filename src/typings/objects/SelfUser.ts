@@ -1,4 +1,4 @@
-export default interface SelfUser {
+export default class SelfUser {
     id: string
     username: string
     identify_num: string
@@ -11,4 +11,18 @@ export default interface SelfUser {
     mobile_prefix: string
     mobile: string
     invited_count: number
+    constructor() {
+        this.id = ''
+        this.username = ''
+        this.identify_num = ''
+        this.online = false
+        this.status = 0
+        this.avatar = ''
+        this.bot = false
+        this.mobile_verified = false
+        this.client_id = ''
+        this.mobile_prefix = ''
+        this.mobile = ''
+        this.invited_count = 0
+    }
 }

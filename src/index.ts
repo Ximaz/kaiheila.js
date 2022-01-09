@@ -5,13 +5,13 @@ import ClientWebSocket from './handlers/Websocket'
 import { EventType } from './typings/handlers/Websocket'
 import WebSocket from 'ws'
 import {
-    Channel,
-    DirectMessage,
-    Guild,
-    GuildMember,
-    GuildRole,
-    User,
-    Message,
+    Channel as ChannelEvent,
+    DirectMessage as DirectMessageEvent,
+    Guild as GuildEvent,
+    GuildMember as GuildMemberEvent,
+    GuildRole as GuildRoleEvent,
+    User as UserEvent,
+    Message as MessageEvent,
 } from './typings/events/index'
 import {
     AssetManager,
@@ -25,6 +25,7 @@ import {
     UserManager,
 } from './handlers/managers/index'
 import Card from './handlers/managers/Card'
+import User from './typings/objects/User'
 
 type GlobalEvents = {
     // Bot itself :
@@ -32,50 +33,52 @@ type GlobalEvents = {
     disconnected: () => void
     debug: (e: any) => void
 
-    message: (message: Message.Message) => void
+    message: (message: MessageEvent) => void
 
     // Channel events :
-    addedChannel: (e: Channel.AddedChannel) => void
-    updatedChannel: (e: Channel.UpdatedChannel) => void
-    deletedChannel: (e: Channel.DeletedChannel) => void
-    deletedMessage: (e: Channel.DeletedMessage) => void
-    updatedMessage: (e: Channel.UpdatedMessage) => void
-    pinnedMessage: (e: Channel.PinnedMessage) => void
-    unpinnedMessage: (e: Channel.UnpinnedMessage) => void
-    addedReaction: (e: Channel.AddedReaction) => void
-    deletedReaction: (e: Channel.DeletedReaction) => void
+    addedChannel: (e: ChannelEvent.AddedChannel) => void
+    updatedChannel: (e: ChannelEvent.UpdatedChannel) => void
+    deletedChannel: (e: ChannelEvent.DeletedChannel) => void
+    deletedMessage: (e: ChannelEvent.DeletedMessage) => void
+    updatedMessage: (e: ChannelEvent.UpdatedMessage) => void
+    pinnedMessage: (e: ChannelEvent.PinnedMessage) => void
+    unpinnedMessage: (e: ChannelEvent.UnpinnedMessage) => void
+    addedReaction: (e: ChannelEvent.AddedReaction) => void
+    deletedReaction: (e: ChannelEvent.DeletedReaction) => void
 
     // DirectMessage events :
-    addedPrivateReaction: (e: DirectMessage.AddedPrivateReaction) => void
-    deletedPrivateReaction: (e: DirectMessage.DeletedPrivateReaction) => void
-    updatedPrivateMessage: (e: DirectMessage.UpdatedPrivateMessage) => void
-    deletedPrivateMessage: (e: DirectMessage.DeletedPrivateMessage) => void
+    addedPrivateReaction: (e: DirectMessageEvent.AddedPrivateReaction) => void
+    deletedPrivateReaction: (
+        e: DirectMessageEvent.DeletedPrivateReaction
+    ) => void
+    updatedPrivateMessage: (e: DirectMessageEvent.UpdatedPrivateMessage) => void
+    deletedPrivateMessage: (e: DirectMessageEvent.DeletedPrivateMessage) => void
 
     // Guild events :
-    addedBlockList: (e: Guild.AddedBlackList) => void
-    deletedBlockList: (e: Guild.DeletedBlackList) => void
-    deletedGuild: (e: Guild.DeletedGuild) => void
-    updatedGuild: (e: Guild.UpdatedGuild) => void
+    addedBlockList: (e: GuildEvent.AddedBlackList) => void
+    deletedBlockList: (e: GuildEvent.DeletedBlackList) => void
+    deletedGuild: (e: GuildEvent.DeletedGuild) => void
+    updatedGuild: (e: GuildEvent.UpdatedGuild) => void
 
     // GuildMember events :
-    exitedGuild: (e: GuildMember.ExitedGuild) => void
-    guildMemberOffline: (e: GuildMember.GuildMemberOffline) => void
-    guildMemberOnline: (e: GuildMember.GuildMemberOnline) => void
-    joinedGuild: (e: GuildMember.JoinedGuild) => void
-    updatedGuildMember: (e: GuildMember.UpdatedGuildMember) => void
+    exitedGuild: (e: GuildMemberEvent.ExitedGuild) => void
+    guildMemberOffline: (e: GuildMemberEvent.GuildMemberOffline) => void
+    guildMemberOnline: (e: GuildMemberEvent.GuildMemberOnline) => void
+    joinedGuild: (e: GuildMemberEvent.JoinedGuild) => void
+    updatedGuildMember: (e: GuildMemberEvent.UpdatedGuildMember) => void
 
     // GuildRole events :
-    addedGuildRole: (e: GuildRole.AddedGuildRole) => void
-    deletedGuildRole: (e: GuildRole.DeletedGuildRole) => void
-    updatedGuildRole: (e: GuildRole.UpdatedGuildRole) => void
+    addedGuildRole: (e: GuildRoleEvent.AddedGuildRole) => void
+    deletedGuildRole: (e: GuildRoleEvent.DeletedGuildRole) => void
+    updatedGuildRole: (e: GuildRoleEvent.UpdatedGuildRole) => void
 
     // User events :
-    exitedChannel: (e: User.ExitedChannel) => void
-    joinedChannel: (e: User.JoinedChannel) => void
-    messageBtnClick: (e: User.MessageBtnClick) => void
-    selfExitedGuild: (e: User.SelfExitedGuild) => void
-    selfJoinedGuild: (e: User.SelfJoinedGuild) => void
-    updatedUser: (e: User.UpdatedUser) => void
+    exitedChannel: (e: UserEvent.ExitedChannel) => void
+    joinedChannel: (e: UserEvent.JoinedChannel) => void
+    messageBtnClick: (e: UserEvent.MessageBtnClick) => void
+    selfExitedGuild: (e: UserEvent.SelfExitedGuild) => void
+    selfJoinedGuild: (e: UserEvent.SelfJoinedGuild) => void
+    updatedUser: (e: UserEvent.UpdatedUser) => void
 }
 
 declare interface Client {
@@ -107,6 +110,7 @@ class Client extends EventEmitter {
     token
     options
     sessionId: string
+    me: User
     #socket: ClientWebSocket | undefined
 
     // API Handlings
@@ -130,6 +134,7 @@ class Client extends EventEmitter {
         this.token = token
         this.options = options as ClientOptions
         this.#API = new API(token, this.options)
+        this.me = new User()
         this.#socket = undefined
         this.managers = {
             user: new UserManager(this),
@@ -169,7 +174,7 @@ class Client extends EventEmitter {
                 if (!this.#socket) return
                 this.#socket.sendHeartBeat()
             }.bind(this),
-            onMessage = function (this: Client, event: WebSocket.MessageEvent) {
+            onMessage = async function (this: Client, event: WebSocket.MessageEvent) {
                 if (!this.#socket) return
                 const response = this.#socket.parseResponse(event)
 
@@ -203,6 +208,10 @@ class Client extends EventEmitter {
                         if (!this.#socket.sessionId)
                             this.#socket.sessionId = trustedSessionId
                         this.sessionId = trustedSessionId
+
+                        const meResponse = await this.#API.execute(this.#API.routes.me)
+                        Object.assign(this.me, meResponse.data.data)
+
                         this.emit('ready', trustedSessionId)
                         break
 
@@ -277,4 +286,23 @@ class Client extends EventEmitter {
     }
 }
 
-export { Client, Card }
+import Attachment from './typings/objects/Attachment'
+import Channel from './typings/objects/Channel'
+import Guild from './typings/objects/Guild'
+import Message from './typings/objects/Message'
+import Quote from './typings/objects/Quote'
+import Role from './typings/objects/Role'
+import SelfUser from './typings/objects/SelfUser'
+
+export {
+    Client,
+    Card,
+    Attachment,
+    Channel,
+    Guild,
+    Message,
+    Quote,
+    Role,
+    SelfUser,
+    User,
+}

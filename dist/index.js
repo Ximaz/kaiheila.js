@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Card = exports.Client = void 0;
+exports.User = exports.SelfUser = exports.Role = exports.Quote = exports.Message = exports.Guild = exports.Channel = exports.Attachment = exports.Card = exports.Client = void 0;
 const events_1 = require("events");
 const API_1 = __importDefault(require("./handlers/API"));
 const Websocket_1 = __importDefault(require("./handlers/Websocket"));
@@ -11,10 +11,13 @@ const Websocket_2 = require("./typings/handlers/Websocket");
 const index_1 = require("./handlers/managers/index");
 const Card_1 = __importDefault(require("./handlers/managers/Card"));
 exports.Card = Card_1.default;
+const User_1 = __importDefault(require("./typings/objects/User"));
+exports.User = User_1.default;
 class Client extends events_1.EventEmitter {
     token;
     options;
     sessionId;
+    me;
     #socket;
     #API;
     managers;
@@ -29,6 +32,7 @@ class Client extends events_1.EventEmitter {
         this.token = token;
         this.options = options;
         this.#API = new API_1.default(token, this.options);
+        this.me = new User_1.default();
         this.#socket = undefined;
         this.managers = {
             user: new index_1.UserManager(this),
@@ -58,7 +62,7 @@ class Client extends events_1.EventEmitter {
             if (!this.#socket)
                 return;
             this.#socket.sendHeartBeat();
-        }.bind(this), onMessage = function (event) {
+        }.bind(this), onMessage = async function (event) {
             if (!this.#socket)
                 return;
             const response = this.#socket.parseResponse(event);
@@ -83,6 +87,8 @@ class Client extends events_1.EventEmitter {
                     if (!this.#socket.sessionId)
                         this.#socket.sessionId = trustedSessionId;
                     this.sessionId = trustedSessionId;
+                    const meResponse = await this.#API.execute(this.#API.routes.me);
+                    Object.assign(this.me, meResponse.data.data);
                     this.emit('ready', trustedSessionId);
                     break;
                 case Websocket_2.EventType.PING:
@@ -142,3 +148,17 @@ class Client extends events_1.EventEmitter {
     }
 }
 exports.Client = Client;
+const Attachment_1 = __importDefault(require("./typings/objects/Attachment"));
+exports.Attachment = Attachment_1.default;
+const Channel_1 = __importDefault(require("./typings/objects/Channel"));
+exports.Channel = Channel_1.default;
+const Guild_1 = __importDefault(require("./typings/objects/Guild"));
+exports.Guild = Guild_1.default;
+const Message_1 = __importDefault(require("./typings/objects/Message"));
+exports.Message = Message_1.default;
+const Quote_1 = __importDefault(require("./typings/objects/Quote"));
+exports.Quote = Quote_1.default;
+const Role_1 = __importDefault(require("./typings/objects/Role"));
+exports.Role = Role_1.default;
+const SelfUser_1 = __importDefault(require("./typings/objects/SelfUser"));
+exports.SelfUser = SelfUser_1.default;

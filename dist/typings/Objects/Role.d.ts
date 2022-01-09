@@ -1,4 +1,4 @@
-export default interface Role {
+export default class Role {
     role_id: number;
     name: string;
     color: number;
@@ -6,4 +6,5 @@ export default interface Role {
     hoist: number;
     mentionable: number;
     permissions: number;
+    constructor();
 }

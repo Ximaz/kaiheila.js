@@ -5,7 +5,7 @@ import VideoExtra from './Message/videoMessage';
 import KMarkdownExtra from './Message/kmarkdownMessage';
 import CardExtra from './Message/cardMessage';
 declare type ChannelType = 'GROUP' | 'PERSON';
-export declare interface Message {
+export default class Message {
     channel_type: ChannelType;
     type: number;
     target_id: string;
@@ -14,6 +14,7 @@ export declare interface Message {
     msg_id: string;
     msg_timestamp: number;
     nonce: string;
-    extra: TextExtra | FileExtra | PictureExtra | VideoExtra | KMarkdownExtra | CardExtra;
+    extra?: TextExtra | FileExtra | PictureExtra | VideoExtra | KMarkdownExtra | CardExtra;
+    constructor();
 }
 export {};

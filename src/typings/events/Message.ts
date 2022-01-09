@@ -7,7 +7,7 @@ import CardExtra from './Message/cardMessage'
 
 declare type ChannelType = 'GROUP' | 'PERSON'
 
-export declare interface Message {
+export default class Message {
     channel_type: ChannelType
     type: number
     target_id: string
@@ -16,12 +16,22 @@ export declare interface Message {
     msg_id: string
     msg_timestamp: number
     nonce: string
-    extra:
+    extra?:
         | TextExtra
         | FileExtra
         | PictureExtra
         | VideoExtra
         | KMarkdownExtra
         | CardExtra
-}
 
+    constructor() {
+        this.channel_type = 'GROUP'
+        this.type = 0
+        this.target_id = ''
+        this.author_id = ''
+        this.content = ''
+        this.msg_id = ''
+        this.msg_timestamp = 0
+        this.nonce = ''
+    }
+}

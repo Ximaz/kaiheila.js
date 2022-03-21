@@ -19,7 +19,7 @@
         "kaiheila.js",
         "kaiehila.ts"
     ],
-    "author": "Quatrecentquatre <obvious.ly.dev@gmail.com> (https://github.com/Quatrecentquatre-404/kaiheila.js)",
+    "author": "Ximaz <obvious.ly.dev@gmail.com> (https://github.com/Ximaz/kaiheila.js)",
     "license": "ISC",
     "devDependencies": {
         "@types/ffmpeg-static": "^3.0.1",
@@ -34,10 +34,10 @@
         "ws": "^7.4.5"
     },
     "repository": {
-        "url": "git+https://github.com/Quatrecentquatre-404/kaiheila.js.git"
+        "url": "git+https://github.com/Ximaz/kaiheila.js.git"
     },
     "bugs": {
-        "url": "https://github.com/Quatrecentquatre-404/kaiheila.js/issues"
+        "url": "https://github.com/Ximaz/kaiheila.js/issues"
     },
-    "homepage": "https://github.com/Quatrecentquatre-404/kaiheila.js#readme"
+    "homepage": "https://github.com/Ximaz/kaiheila.js#readme"
 }
